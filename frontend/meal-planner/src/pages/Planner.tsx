@@ -7,6 +7,8 @@ import { addDays} from 'date-fns';
 
 import "react-day-picker/dist/style.css";
 
+import FoodItem from '../interfaces/FoodItem';
+import MealData from '../interfaces/MealData';
 
 function CurrentWeekRow(props: RowProps) {
     const isDateInCurrentWeek = (dateToCheck: Date) => {
@@ -19,22 +21,6 @@ function CurrentWeekRow(props: RowProps) {
     if (isNotCurrentWeek) return <></>;
     return <Row {...props} />;
   }
-
-interface FoodItem {
-  food: string;
-  type: string;
-  serving: string;
-  calPer100g: string;
-  proPer100g: string;
-  carbPer100g: string;
-  fatPer100g: string;
-}
-
-interface MealData {
-  morning: FoodItem[];
-  afternoon: FoodItem[];
-  evening: FoodItem[];
-}
 
 const MealPlanner = () => {
   const [mealData, setMealData] = useState<MealData>({
