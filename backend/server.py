@@ -25,11 +25,11 @@ def get_nutrition(var):
 
 @app.route('/receive_data', methods=['POST'])
 def receive_data():
-    print("heh")
     data = request.json
     print("Received data from frontend:", data)
     
     # Here you can process the received data as needed
+    
     
     return jsonify({"message": "Data received successfully"}), 200
 

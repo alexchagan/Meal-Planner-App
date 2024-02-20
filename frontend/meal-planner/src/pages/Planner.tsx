@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import {TextField} from '@mui/material';
 
 interface FoodItem {
   food: string;
   type: string;
   serving: string;
   calPer100g: string;
+  proPer100g: string;
+  carbPer100g: string;
+  fatPer100g: string;
 }
 
 interface MealData {
@@ -23,7 +27,7 @@ const MealPlanner = () => {
   const addRow = (section: keyof MealData) => {
     setMealData(prevState => ({
       ...prevState,
-      [section]: [...prevState[section], { food: '', type: 'common', serving: '', calPer100g: '' }]
+      [section]: [...prevState[section], { food: '', type: 'common', serving: '', calPer100g: '', proPer100g: '', carbPer100g: '', fatPer100g: '' }]
     }));
   };
 
@@ -44,9 +48,9 @@ const MealPlanner = () => {
   const sendDataToBackend = async () => {
     try {
       const formattedData = {
-        morning: mealData.morning.map(item => [item.food, item.type, item.serving, item.calPer100g]),
-        afternoon: mealData.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g]),
-        evening: mealData.evening.map(item => [item.food, item.type, item.serving, item.calPer100g])
+        morning: mealData.morning.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
+        afternoon: mealData.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
+        evening: mealData.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
       };
       
       // Assuming you have an API endpoint to send data to the backend
@@ -78,11 +82,11 @@ const MealPlanner = () => {
       {Object.keys(mealData).map((sectionKey) => {
         const section = sectionKey as keyof MealData;
         return (
-          <div key={section}>
-            <h2>{section.charAt(0).toUpperCase() + section.slice(1)}</h2>
+          <div key={section} className='comp'>
+            <h2>{section.charAt(0).toUpperCase() + section.slice(1)} {section === "morning" && "🍳"} {section === "afternoon" && "🥩"} {section === "evening" && "🥣"}</h2>
             {mealData[section].map((food, index) => (
-              <div key={index}>
-                <label style={{ fontWeight: 'bold' }}>Type</label>
+              <div className='row' key={index}>
+               <div className='radio'>
                 <label>
                   <input
                     type="radio"
@@ -101,51 +105,133 @@ const MealPlanner = () => {
                   />
                   Custom
                 </label>
+             </div>
 
-                <label style={{ fontWeight: 'bold' }}> Meal </label>
-                <input
-                  type="text"
+                <TextField
+                  label = "Meal Descirption"
                   value={food.food}
                   onChange={(e) => handleChange(section, index, 'food', e.target.value)}
-                  placeholder="Food"
+                  placeholder="Meal Description"
+                  size='small'
                 />
 
                 {food.type === 'custom' ? (
                   <>
-                    <label style={{ fontWeight: 'bold' }}> Serving </label>
-                    <input
+                    
+                    
+                    <TextField
+                      label = "Serving in g"
                       type="text"
-                      value={food.serving || ''}
+                      value={food.serving}
                       onChange={(e) => handleChange(section, index, 'serving', e.target.value)}
                       placeholder=""
+                      className="small-textbox"
+                      defaultValue="0"
+                      size = "small"
                     />
 
-                    <label style={{ fontWeight: 'bold' }}> Cal per 100g </label>
-                    <input
+                    <TextField
+                      label = "Calories 100g"
                       type="text"
-                      value={food.calPer100g || ''}
+                      value={food.calPer100g}
                       onChange={(e) => handleChange(section, index, 'calPer100g', e.target.value)}
                       placeholder=""
+                      className="small-textbox"
+                      defaultValue="0"
+                      size = "small"
                     />
+
+                   
+                    <TextField
+                      label = "Protein 100g"
+                      type="text"
+                      value={food.proPer100g}
+                      onChange={(e) => handleChange(section, index, 'proPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      defaultValue="0"
+                      size = "small"
+                    />
+
+                    <TextField
+                      label = "Carbs 100g"
+                      type="text"
+                      value={food.carbPer100g}
+                      onChange={(e) => handleChange(section, index, 'carbPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      defaultValue="0"
+                      size = "small"
+                    />
+
+                    <TextField
+                      label = "Fat 100g"
+                      type="text"
+                      value={food.fatPer100g}
+                      onChange={(e) => handleChange(section, index, 'fatPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      defaultValue="0"
+                      size = "small"
+                    />
+
                   </>
                 ) : (
                   <>
-                    <label style={{ fontWeight: 'bold' }}> Serving </label>
-                    <input
+                    <TextField
+                      label = "Serving in g"
                       type="text"
                       value="0"
-                      disabled
                       onChange={(e) => handleChange(section, index, 'serving', e.target.value)}
                       placeholder=""
+                      className="small-textbox"
+                      size = "small"
+                      disabled
                     />
 
-                    <label style={{ fontWeight: 'bold' }}> Cal per 100g </label>
-                    <input
+                    <TextField
+                      label = "Calories 100g"
                       type="text"
                       value="0"
                       disabled
                       onChange={(e) => handleChange(section, index, 'calPer100g', e.target.value)}
                       placeholder=""
+                      className="small-textbox"
+                      size = "small"
+                    />
+
+                   
+                    <TextField
+                      label = "Protein 100g"
+                      type="text"
+                      value="0"
+                      disabled
+                      onChange={(e) => handleChange(section, index, 'proPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      size = "small"
+                    />
+
+                    <TextField
+                      label = "Carbs 100g"
+                      type="text"
+                      value="0"
+                      disabled
+                      onChange={(e) => handleChange(section, index, 'carbPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      size = "small"
+                    />
+
+                    <TextField
+                      label = "Fat 100g"
+                      type="text"
+                      value="0"
+                      disabled
+                      onChange={(e) => handleChange(section, index, 'fatPer100g', e.target.value)}
+                      placeholder=""
+                      className="small-textbox"
+                      size = "small"
                     />
                   </>
                 )}
@@ -157,7 +243,7 @@ const MealPlanner = () => {
           </div>
         );
       })}
-      <button onClick={sendDataToBackend}>Send Data to Backend</button>
+      <button onClick={sendDataToBackend}>Confirm</button>
     </div>
   );
 };
