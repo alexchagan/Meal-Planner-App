@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
 import {TextField} from '@mui/material';
 
+import {endOfWeek, isWithinInterval, startOfWeek} from "date-fns";
+import {DayPicker, Row, RowProps} from "react-day-picker";
+import { addDays} from 'date-fns';
+
+import "react-day-picker/dist/style.css";
+
+
+function CurrentWeekRow(props: RowProps) {
+    const isDateInCurrentWeek = (dateToCheck: Date) => {
+      const today = new Date();
+      const start = startOfWeek(today);
+      const end = endOfWeek(today);
+      return isWithinInterval(dateToCheck, { start, end });
+    };
+    const isNotCurrentWeek = props.dates.every((date) => !isDateInCurrentWeek(date));
+    if (isNotCurrentWeek) return <></>;
+    return <Row {...props} />;
+  }
+
 interface FoodItem {
   food: string;
   type: string;
@@ -23,6 +42,8 @@ const MealPlanner = () => {
     afternoon: [],
     evening: []
   });
+
+  const [selectedDate, setSelectedDate] = useState<Date>(startOfWeek(new Date()));
 
   const addRow = (section: keyof MealData) => {
     setMealData(prevState => ({
@@ -47,7 +68,9 @@ const MealPlanner = () => {
 
   const sendDataToBackend = async () => {
     try {
+      const selectedDatePlusOneDay = addDays(selectedDate, 1);
       const formattedData = {
+        date: selectedDatePlusOneDay,
         morning: mealData.morning.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
         afternoon: mealData.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
         evening: mealData.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
@@ -76,8 +99,23 @@ const MealPlanner = () => {
   };
 
   return (
+  
+
     <div>
-      <h1>Meal Planner</h1>
+        
+      
+      <h1 className='title'>Meal Planner</h1>
+
+      <div className='container'>
+        <DayPicker className='box'
+        components={{ Row: CurrentWeekRow }}
+        showOutsideDays
+        disableNavigation
+        mode="single"
+        onDayClick={(day) => setSelectedDate(day)}  
+        {...(selectedDate && { selected: selectedDate })}
+        />
+      </div>
 
       {Object.keys(mealData).map((sectionKey) => {
         const section = sectionKey as keyof MealData;
