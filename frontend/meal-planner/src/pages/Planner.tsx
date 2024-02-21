@@ -34,7 +34,7 @@ const MealPlanner = () => {
   const addRow = (section: keyof MealData) => {
     setMealData(prevState => ({
       ...prevState,
-      [section]: [...prevState[section], { food: '', type: 'common', serving: '', calPer100g: '', proPer100g: '', carbPer100g: '', fatPer100g: '' }]
+      [section]: [...prevState[section], { food: '', type: 'common', serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' }]
     }));
   };
 
@@ -46,10 +46,19 @@ const MealPlanner = () => {
   };
 
   const handleChange = (section: keyof MealData, index: number, field: keyof FoodItem, value: string) => {
-    setMealData(prevState => ({
-      ...prevState,
-      [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value } : food)
-    }));
+    if (field === 'type' && value === 'common') {
+      // Set the values to '0' when 'common' radio option is selected
+      setMealData(prevState => ({
+        ...prevState,
+        [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value, serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' } : food)
+      }));
+    } else {
+      // For other fields or when 'custom' radio option is selected
+      setMealData(prevState => ({
+        ...prevState,
+        [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value } : food)
+      }));
+    }
   };
 
   const sendDataToBackend = async () => {
@@ -86,7 +95,7 @@ const MealPlanner = () => {
 
   return (
   
-
+    
     <div>
         
       
@@ -103,6 +112,7 @@ const MealPlanner = () => {
         />
       </div>
 
+      <div>
       {Object.keys(mealData).map((sectionKey) => {
         const section = sectionKey as keyof MealData;
         return (
@@ -268,6 +278,7 @@ const MealPlanner = () => {
         );
       })}
       <button onClick={sendDataToBackend}>Confirm</button>
+      </div>
     </div>
   );
 };
