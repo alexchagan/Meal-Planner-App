@@ -1,18 +1,19 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import os
 import requests
 import utils
-from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
 
 app = Flask(__name__)
 CORS(app)
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/meal_planner'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 
@@ -60,6 +61,23 @@ def receive_data():
     print(meals[1])
     
     return jsonify({"message": "Data received successfully"}), 200
+
+@app.route('/create_session', methods=['POST'])
+def create_session():
+    try:
+        data = request.json
+        token = data['credential']
+        client_id = data['clientId']
+
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+
+        userid = idinfo['sub']
+        print(userid)
+
+        return jsonify({"message": "User Data received successfully"}), 200
+    except ValueError:
+    # Invalid token
+        pass
 
 
 if __name__ == '__main__':
