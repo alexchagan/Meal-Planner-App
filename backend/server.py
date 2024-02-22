@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
+from flask_session import Session
 from flask_cors import CORS
 import requests
 import utils
@@ -7,21 +8,25 @@ from sqlalchemy.sql import func
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-
 app = Flask(__name__)
-CORS(app)
+
+app.secret_key = "default"
+
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
+
+CORS(app, supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/meal_planner'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
 db = SQLAlchemy(app)
 
 class MealSQL(db.Model):
-    __tablename__ = 'Meals'  # Table name should match your existing table name
+    __tablename__ = 'Meals'  # Table name in mySQL
 
     meal_id = db.Column("id",db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)  
+    user_id = db.Column(db.String(30))  
     date = db.Column(db.String(10))  
     type = db.Column(db.String(10))  
     period = db.Column(db.String(10))  
@@ -35,6 +40,22 @@ class MealSQL(db.Model):
 def init_app_context():
     with app.app_context():
         db.create_all()
+
+@app.route('/create_session', methods=['POST'])
+def create_session():
+    try:
+        data = request.json
+        token = data['credential']
+        client_id = data['clientId']
+
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+
+        session['user_id'] = idinfo['sub']
+        
+        return jsonify({"message": "User Data received successfully", "user_id": idinfo['sub']}), 200
+    except ValueError:
+    # Invalid token
+        pass
 
 @app.route('/receive_data', methods=['POST'])
 def receive_data():
@@ -50,35 +71,14 @@ def receive_data():
         else:
             meal_data.nutritional_values_api()
         
-        meal_row = MealSQL(date=meal_data.date, type=meal_data.type, period=meal_data.period,
+        meal_row = MealSQL(user_id=session.get('user_id'), date=meal_data.date, type=meal_data.type, period=meal_data.period,
                     meal=meal_data.meal, serving=meal_data.serving, cal=meal_data.cal,
                     protein=meal_data.protein, carb=meal_data.carb, fat=meal_data.fat)
         
         db.session.add(meal_row)
         db.session.commit()
-
-
-    print(meals[1])
-    
+  
     return jsonify({"message": "Data received successfully"}), 200
-
-@app.route('/create_session', methods=['POST'])
-def create_session():
-    try:
-        data = request.json
-        token = data['credential']
-        client_id = data['clientId']
-
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
-
-        userid = idinfo['sub']
-        print(userid)
-
-        return jsonify({"message": "User Data received successfully"}), 200
-    except ValueError:
-    # Invalid token
-        pass
-
 
 if __name__ == '__main__':
     init_app_context()

@@ -15,3 +15,5 @@ __pycache__/
 # Build output
 /build
 /dist
+
+flask_session

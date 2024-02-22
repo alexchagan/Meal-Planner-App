@@ -73,6 +73,7 @@ const MealPlanner = () => {
       
       // Assuming you have an API endpoint to send data to the backend
       const response = await fetch('http://127.0.0.1:5000/receive_data', {
+        credentials: 'include',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
