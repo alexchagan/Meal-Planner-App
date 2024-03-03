@@ -1,0 +1,54 @@
+/* Style for WeeklyMeals component */
+.weekly-meals {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .weekly-meals h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .weekly-meals h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .weekly-meals h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  /* Style for the meal table */
+  .meal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .meal-table th,
+  .meal-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .meal-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .meal-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .meal-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Optional: Add styles for the loading message */
+  .loading-message {
+    font-style: italic;
+    color: #666;
+  }
+  

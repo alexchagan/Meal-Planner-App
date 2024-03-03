@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
 import MainPage from './pages/MainPage';
 import MealPlanner from './pages/MealPlanner'
+import WeeklyMeals from './pages/MyMeals';
 
 function App() {
   const clientId = import.meta.env.VITE_REACT_APP_CLIENT_ID;
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/mealplanner" element={<MealPlanner />} />
+          <Route path="/currentmeals" element={<WeeklyMeals/>} />
         </Routes>
       </div>
     </Router>

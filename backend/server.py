@@ -49,6 +49,8 @@ def init_app_context():
         db.create_all()
 
 current_days = utils.get_dates_of_week()
+print(current_days)
+
 
 @app.route('/create_session', methods=['POST'])
 def create_session():
@@ -100,6 +102,42 @@ def receive_data():
         db.session.commit()
   
     return jsonify({"message": "Data received successfully"}), 200
+
+@app.route('/send_weekly_meals', methods=['GET', 'POST'])
+def send_weekly_meals():
+    print('Hi')
+    # Retrieve current days of the week
+    current_days = utils.get_dates_of_week()
+    print(session.get('user_id'))
+    # Retrieve meals for the current user and days
+    meals_query = MealSQL.query.filter(
+        MealSQL.user_id == session.get('user_id'),
+        MealSQL.date.in_(current_days)
+    ).all()
+
+    # Organize the retrieved data into the desired JSON format
+    weekly_meals = {}
+    for meal in meals_query:
+        if meal.date not in weekly_meals:
+            weekly_meals[meal.date] = {
+                'morning': [],
+                'afternoon': [],
+                'evening': []
+            }
+        # Add meal details to the corresponding period
+        period = meal.period.lower()  # assuming period is 'Morning', 'Afternoon', or 'Evening'
+        weekly_meals[meal.date][period].append({
+            'meal': meal.meal,
+            'grams': meal.serving,
+            'calories': meal.cal,
+            'protein': meal.protein,
+            'fat': meal.fat,
+            'carbs': meal.carb
+        })
+
+    # Send the JSON response to the frontend
+    print(weekly_meals)
+    return jsonify(weekly_meals)
 
 if __name__ == '__main__':
     init_app_context()

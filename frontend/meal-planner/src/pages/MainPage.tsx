@@ -9,12 +9,17 @@ function MainPage() {
 
     const goToMealPlanner = () => {
         navigate('/mealplanner');
+        };  
+    
+    const goToCurrentMeals = () => {
+        navigate('/currentmeals');
         };    
 
     return (
         <div>
         <h1>Main Page</h1>
         <Button onClick={goToMealPlanner}>Go to Meal Planner</Button>
+        <Button onClick={goToCurrentMeals}>My Weekly Meals</Button>
         <SignIn/>
         </div>
                 
