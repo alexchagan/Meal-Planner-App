@@ -1,22 +1,25 @@
 /* Style for WeeklyMeals component */
-.weekly-meals {
+.weekly-meals-container {
     font-family: Arial, sans-serif;
     padding: 20px;
+    border: 2px solid black;
+    margin-bottom: 20px; 
   }
   
-  .weekly-meals h1 {
-    font-size: 24px;
+  .date-meals-container {
     margin-bottom: 20px;
   }
   
-  .weekly-meals h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
+  .date-header {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 50px;
   }
   
-  .weekly-meals h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
+  .period-header {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 30px;
   }
   
   /* Style for the meal table */

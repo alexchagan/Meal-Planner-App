@@ -11,10 +11,17 @@ interface Meal {
 }
 
 interface MealsByDate {
-  [date: string]: {
-    [period: string]: Meal[];
-  };
-}
+    [date: string]: {
+      [period: string]: Meal[];
+    } & {
+      total: {
+        calories: number;
+        protein: number;
+        fat: number;
+        carbs: number;
+      };
+    };
+  }
 
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
@@ -69,14 +76,14 @@ function WeeklyMeals() {
         <div>
           {/* Loop through each date */}
           {Object.entries(weeklyMeals).map(([date, mealsByPeriod], index) => (
-            <div key={date}>
+            <div className='weekly-meals-container'  key={date}>
               {/* Insert space between dates */}
               {index > 0 && <br />}
-              <h2>{date}</h2>
+              <h2 className='date-header'>{date}</h2>
               {/* Sort periods: morning, afternoon, evening */}
               {['morning', 'afternoon', 'evening'].map(period => (
                 <div key={period}>
-                  <h3>{period}</h3>
+                  <h3 className='period-header'>{period}</h3>
                   <table className='meal-table'>
                     <thead>
                       <tr>
@@ -112,7 +119,9 @@ function WeeklyMeals() {
                   </table>
                 </div>
               ))}
+              <h2>Calories: {mealsByPeriod.total.calories}, Protein: {mealsByPeriod.total.protein}g, Carbs: {mealsByPeriod.total.carbs}g, Fats: {mealsByPeriod.total.fat}g </h2>
             </div>
+    
           ))}
         </div>
       ) : (

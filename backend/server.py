@@ -103,29 +103,25 @@ def receive_data():
   
     return jsonify({"message": "Data received successfully"}), 200
 
+from collections import defaultdict
+
 @app.route('/send_weekly_meals', methods=['GET', 'POST'])
 def send_weekly_meals():
-    print('Hi')
     # Retrieve current days of the week
     current_days = utils.get_dates_of_week()
-    print(session.get('user_id'))
+    user_id = session.get('user_id')
+
     # Retrieve meals for the current user and days
     meals_query = MealSQL.query.filter(
-        MealSQL.user_id == session.get('user_id'),
+        MealSQL.user_id == user_id,
         MealSQL.date.in_(current_days)
     ).all()
 
     # Organize the retrieved data into the desired JSON format
-    weekly_meals = {}
+    weekly_meals = defaultdict(lambda: {'morning': [], 'afternoon': [], 'evening': []})
+
     for meal in meals_query:
-        if meal.date not in weekly_meals:
-            weekly_meals[meal.date] = {
-                'morning': [],
-                'afternoon': [],
-                'evening': []
-            }
-        # Add meal details to the corresponding period
-        period = meal.period.lower()  # assuming period is 'Morning', 'Afternoon', or 'Evening'
+        period = meal.period.lower()
         weekly_meals[meal.date][period].append({
             'meal': meal.meal,
             'grams': meal.serving,
@@ -135,9 +131,30 @@ def send_weekly_meals():
             'carbs': meal.carb
         })
 
+    # Calculate total calories, protein, carbs, and fat for each date
+    for date, meals in weekly_meals.items():
+        total_calories = round(sum(meal['calories'] for meal in meals['morning'] + meals['afternoon'] + meals['evening']), 2)
+        total_protein = round(sum(meal['protein'] for meal in meals['morning'] + meals['afternoon'] + meals['evening']), 2)
+        total_fat = round(sum(meal['fat'] for meal in meals['morning'] + meals['afternoon'] + meals['evening']), 2)
+        total_carbs = round(sum(meal['carbs'] for meal in meals['morning'] + meals['afternoon'] + meals['evening']), 2)
+
+        weekly_meals[date]['total'] = {
+            'calories': total_calories,
+            'protein': total_protein,
+            'fat': total_fat,
+            'carbs': total_carbs
+        }
+
     # Send the JSON response to the frontend
     print(weekly_meals)
     return jsonify(weekly_meals)
+
+@app.route('/remove_meal', methods=['POST'])
+def receive_weekly_meals():
+    data = request.json
+    # Do something with the received JSON data
+    print(data)
+    return '', 204
 
 if __name__ == '__main__':
     init_app_context()
