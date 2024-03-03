@@ -4,7 +4,7 @@ from flask_cors import CORS
 import requests
 import utils
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, exists
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
@@ -22,8 +22,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+class UserSQL(db.Model):
+    __tablename__ = 'Users'
+
+    id = db.Column(db.String(30), primary_key=True) 
+    name = db.Column(db.String(50)) 
+    email = db.Column(db.String(50)) 
+
 class MealSQL(db.Model):
-    __tablename__ = 'Meals'  # Table name in mySQL
+    __tablename__ = 'Meals'  
 
     meal_id = db.Column("id",db.Integer, primary_key=True)
     user_id = db.Column(db.String(30))  
@@ -41,6 +48,8 @@ def init_app_context():
     with app.app_context():
         db.create_all()
 
+current_days = utils.get_dates_of_week()
+
 @app.route('/create_session', methods=['POST'])
 def create_session():
     try:
@@ -49,10 +58,22 @@ def create_session():
         client_id = data['clientId']
 
         idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+        print(idinfo)
 
+        session['name'] = idinfo['name']
         session['user_id'] = idinfo['sub']
+
+        # Check if the user with the given ID already exists in the database
+        user_exists = db.session.query(exists().where(UserSQL.id == idinfo['sub'])).scalar()
+
+        # If the user doesn't exist, insert the user into the database
+        if not user_exists:
+            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email'])
+            db.session.add(user_row)
+            db.session.commit()
+
         
-        return jsonify({"message": "User Data received successfully", "user_id": idinfo['sub']}), 200
+        return jsonify({"message": "User Data received successfully", "user_id": idinfo['sub'], "name": idinfo['name']}), 200
     except ValueError:
     # Invalid token
         pass
