@@ -58,8 +58,13 @@ function WeeklyMeals() {
       .then(response => {
         // Handle response from backend
         if (response.ok) {
-          // If successful, update the UI to reflect the removal
-          // For example, you can fetch the updated data and set the state
+          // If successful, remove the row from the UI
+          const tableRow = document.getElementById(
+            `${date}-${period}-${meal}`
+          );
+          if (tableRow) {
+            tableRow.remove();
+          }
         } else {
           throw new Error('Failed to remove meal');
         }
@@ -99,7 +104,7 @@ function WeeklyMeals() {
                     <tbody>
                       {/* Loop through meals in the period */}
                       {mealsByPeriod[period]?.map((meal, mealIndex) => (
-                        <tr key={mealIndex}>
+                        <tr id={`${date}-${period}-${meal.meal}`} key={mealIndex}>
                           <td>{meal.meal}</td>
                           <td>{meal.grams}</td>
                           <td>{meal.calories}</td>
