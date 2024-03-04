@@ -6,6 +6,7 @@ import {DayPicker, Row, RowProps} from "react-day-picker";
 import { addDays} from 'date-fns';
 
 import "react-day-picker/dist/style.css";
+import '../css/MealPlanner.css'  
 
 import FoodItem from '../interfaces/FoodItem';
 import MealData from '../interfaces/MealData';
@@ -97,10 +98,10 @@ const MealPlanner = () => {
   return (
   
     
-    <div>
+    <div className='main'>
         
       
-      <h1 className='title'>Meal Planner</h1>
+  
 
       <div className='container'>
         <DayPicker className='box'
@@ -274,11 +275,11 @@ const MealPlanner = () => {
                 <button onClick={() => removeRow(section, index)}>-</button>
               </div>
             ))}
-            <button onClick={() => addRow(section)}>Add Meal</button>
+            <button className="button-61" onClick={() => addRow(section)}>Add Meal</button>
           </div>
         );
       })}
-      <button onClick={sendDataToBackend}>Confirm</button>
+      <button className='button-28' onClick={sendDataToBackend}>Confirm</button>
       </div>
     </div>
   );
