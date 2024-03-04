@@ -152,6 +152,24 @@ def send_weekly_meals():
 @app.route('/remove_meal', methods=['POST'])
 def receive_weekly_meals():
     data = request.json
+    date = data.get('date')
+    period = data.get('period')
+    meal_name = data.get('meal')
+    user_id = session.get('user_id')
+    
+    try:
+        # Perform deletion based on provided conditions
+        meal_to_remove = MealSQL.query.filter_by(user_id=user_id, date=date, period=period, meal=meal_name).first()
+        if meal_to_remove:
+            db.session.delete(meal_to_remove)
+            db.session.commit()
+            return jsonify({'message': 'Meal removed successfully'}), 200
+        else:
+            return jsonify({'message': 'Meal not found'}), 404
+    except Exception as e:
+        # Handle any errors that might occur during the deletion process
+        return jsonify({'message': 'Error removing meal', 'error': str(e)}), 500
+
     # Do something with the received JSON data
     print(data)
     return '', 204
