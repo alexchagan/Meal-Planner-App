@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './WeeklyMeals.css';
+import '../css/MyMeals.css';
 
 interface Meal {
   meal: string;

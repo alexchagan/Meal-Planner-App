@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
-
-
-// interface CredentialResponse {
-//   credential: any;
-//   clientId: string;
-//   select_by: string;
-// }
+import '../css/SignIn.css'  
 
 function SignIn() {
 
@@ -39,7 +33,7 @@ function SignIn() {
 
   return (
     <div>
-      <GoogleLogin type = 'icon' text='signin'
+      <GoogleLogin text='signin' 
         onSuccess={(credentialResponse) => {
           console.log(credentialResponse);
           sendCredentialToBackend(credentialResponse.credential, credentialResponse.clientId);
@@ -47,11 +41,16 @@ function SignIn() {
         onError={() => {
           console.log('Login Failed');
         }}
-        useOneTap
+        
+        
+      /> 
+     
+      {/* {currentUser && <p className='logged-in-text'>Logged in as: {currentUser}</p>} */}
+      
+      
 
-      />
-      {currentUser && <p>Logged in as: {currentUser}</p>}
     </div>
+    
   );
 }
 

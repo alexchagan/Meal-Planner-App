@@ -1,4 +1,4 @@
-from Meal import Meal
+from app.models.Meal import Meal
 from datetime import datetime, timedelta
 import pytz
 

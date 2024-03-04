@@ -1,0 +1,12 @@
+.signin-container {
+    position: relative;
+    top: -530px; 
+    left: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logged-in-text {
+    position: relative;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }

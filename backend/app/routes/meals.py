@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-import utils
+import app.utils as utils
 from ..models.MealSQL import MealSQL  
 from .. import db  
 
