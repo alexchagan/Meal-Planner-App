@@ -1,86 +1,11 @@
-from flask import Flask, jsonify, request, session
-from flask_session import Session
-from flask_cors import CORS
-import requests
+from flask import Blueprint, jsonify, request, session
 import utils
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func, exists
-from google.oauth2 import id_token
-from google.auth.transport import requests
+from ..models.MealSQL import MealSQL  
+from .. import db  
 
-app = Flask(__name__)
+meals = Blueprint('meals', __name__)  
 
-app.secret_key = "default"
-
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] = True
-
-CORS(app, supports_credentials=True)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/meal_planner'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-class UserSQL(db.Model):
-    __tablename__ = 'Users'
-
-    id = db.Column(db.String(30), primary_key=True) 
-    name = db.Column(db.String(50)) 
-    email = db.Column(db.String(50)) 
-
-class MealSQL(db.Model):
-    __tablename__ = 'Meals'  
-
-    meal_id = db.Column("id",db.Integer, primary_key=True)
-    user_id = db.Column(db.String(30))  
-    date = db.Column(db.String(10))  
-    type = db.Column(db.String(10))  
-    period = db.Column(db.String(10))  
-    meal = db.Column(db.String(50))  
-    serving = db.Column(db.Float)  
-    cal = db.Column(db.Float)  
-    protein = db.Column(db.Float) 
-    carb = db.Column(db.Float)  
-    fat = db.Column(db.Float)  
-
-def init_app_context():
-    with app.app_context():
-        db.create_all()
-
-current_days = utils.get_dates_of_week()
-print(current_days)
-
-
-@app.route('/create_session', methods=['POST'])
-def create_session():
-    try:
-        data = request.json
-        token = data['credential']
-        client_id = data['clientId']
-
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
-        print(idinfo)
-
-        session['name'] = idinfo['name']
-        session['user_id'] = idinfo['sub']
-
-        # Check if the user with the given ID already exists in the database
-        user_exists = db.session.query(exists().where(UserSQL.id == idinfo['sub'])).scalar()
-
-        # If the user doesn't exist, insert the user into the database
-        if not user_exists:
-            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email'])
-            db.session.add(user_row)
-            db.session.commit()
-
-        
-        return jsonify({"message": "User Data received successfully", "user_id": idinfo['sub'], "name": idinfo['name']}), 200
-    except ValueError:
-    # Invalid token
-        pass
-
-@app.route('/receive_data', methods=['POST'])
+@meals.route('/receive_data', methods=['POST'])
 def receive_data():
     data = request.json
     print("Received data from frontend:", data)
@@ -105,7 +30,7 @@ def receive_data():
 
 from collections import defaultdict
 
-@app.route('/send_weekly_meals', methods=['GET', 'POST'])
+@meals.route('/send_weekly_meals', methods=['GET', 'POST'])
 def send_weekly_meals():
     # Retrieve current days of the week
     current_days = utils.get_dates_of_week()
@@ -149,7 +74,7 @@ def send_weekly_meals():
     print(weekly_meals)
     return jsonify(weekly_meals)
 
-@app.route('/remove_meal', methods=['POST'])
+@meals.route('/remove_meal', methods=['POST'])
 def receive_weekly_meals():
     data = request.json
     date = data.get('date')
@@ -173,8 +98,3 @@ def receive_weekly_meals():
     # Do something with the received JSON data
     print(data)
     return '', 204
-
-if __name__ == '__main__':
-    init_app_context()
-    app.run(debug=True)
-
