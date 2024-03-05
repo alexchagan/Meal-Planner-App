@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../css/MyMeals.css';
+import '../css/Buttons.css';  
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Meal {
   meal: string;
@@ -11,20 +15,20 @@ interface Meal {
 }
 
 interface MealsByDate {
-    [date: string]: {
-      [period: string]: Meal[];
-    } & {
-      total: {
-        calories: number;
-        protein: number;
-        fat: number;
-        carbs: number;
-      };
+  [date: string]: {
+    [period: string]: Meal[];} &{
+    total: {
+      calories: number;
+      protein: number;
+      fat: number;
+      carbs: number;
     };
-  }
+  };
+}
 
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
+  const [selectedDateIndex, setSelectedDateIndex] = useState(0);
 
   useEffect(() => {
     // Fetch data from your Flask backend
@@ -74,66 +78,94 @@ function WeeklyMeals() {
       });
   };
 
+  const handlePrevDate = () => {
+    setSelectedDateIndex(prevIndex =>
+      prevIndex > 0 ? prevIndex - 1 : prevIndex
+    );
+  };
+
+  const handleNextDate = () => {
+    setSelectedDateIndex(prevIndex =>
+      prevIndex < Object.keys(weeklyMeals || {}).length - 1
+        ? prevIndex + 1
+        : prevIndex
+    );
+  };
+
   return (
     <div>
-      <h1>Weekly Meals</h1>
       {weeklyMeals ? (
         <div>
-          {/* Loop through each date */}
-          {Object.entries(weeklyMeals).map(([date, mealsByPeriod], index) => (
-            <div className='weekly-meals-container'  key={date}>
-              {/* Insert space between dates */}
-              {index > 0 && <br />}
-              <h2 className='date-header'>{date}</h2>
-              {/* Sort periods: morning, afternoon, evening */}
-              {['morning', 'afternoon', 'evening'].map(period => (
-                <div key={period}>
-                  <h3 className='period-header'>{period}</h3>
-                  <table className='meal-table'>
-                    <thead>
-                      <tr>
-                        <th>Meal</th>
-                        <th>Grams</th>
-                        <th>Calories</th>
-                        <th>Protein (g)</th>
-                        <th>Fat (g)</th>
-                        <th>Carbs (g)</th>
-                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Loop through meals in the period */}
-                      {mealsByPeriod[period]?.map((meal, mealIndex) => (
-                        <tr id={`${date}-${period}-${meal.meal}`} key={mealIndex}>
-                          <td>{meal.meal}</td>
-                          <td>{meal.grams}</td>
-                          <td>{meal.calories}</td>
-                          <td>{meal.protein}</td>
-                          <td>{meal.fat}</td>
-                          <td>{meal.carbs}</td>
-                          <td>
-                            <button
-                              onClick={() => removeMeal(date, period, meal.meal)}
+          <div className='buttons'>
+            <button className="button-61 left" onClick={handlePrevDate}><ArrowBackIcon/></button>
+            <button className='button-61 right' onClick={handleNextDate}><ArrowForwardIcon/></button>
+          </div>
+          {Object.entries(weeklyMeals).map(([date, mealsByPeriod], index) => {
+            if (index !== selectedDateIndex) return null;
+            return (
+              <div key={date} className='wrapper'>
+                <h2 className='date-header'>{date}</h2>
+                {['morning', 'afternoon', 'evening'].map(period => {
+                  const meals = mealsByPeriod[period];
+                  if (!meals || meals.length === 0) return null; // Don't show the period if there are no meals
+                  return (
+                    <div key={period}>
+                      <h3 className='period-header'>{period}</h3>
+                      <table className='meal-table'>
+                        <thead>
+                          <tr>
+                            <th>Meal</th>
+                            <th>Grams</th>
+                            <th>Calories</th>
+                            <th>Protein (g)</th>
+                            <th>Fat (g)</th>
+                            <th>Carbs (g)</th>                   
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {meals.map((meal, mealIndex) => (
+                            <tr
+                              id={`${date}-${period}-${meal.meal}`}
+                              key={mealIndex}
                             >
-                              Remove
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
-              <h2>Calories: {mealsByPeriod.total.calories}, Protein: {mealsByPeriod.total.protein}g, Carbs: {mealsByPeriod.total.carbs}g, Fats: {mealsByPeriod.total.fat}g </h2>
-            </div>
-    
-          ))}
+                              <td>{meal.meal}</td>
+                              <td>{meal.grams}</td>
+                              <td>{meal.calories}</td>
+                              <td>{meal.protein}</td>
+                              <td>{meal.fat}</td>
+                              <td>{meal.carbs}</td>
+                              
+                                <button style={{ marginLeft: '5px', height: '30px', bottom:'-5px' }} className="button-61"
+                                  onClick={() =>
+                                    removeMeal(date, period, meal.meal)
+                                  }
+                                >
+                                  <DeleteIcon/>
+                                </button> 
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })}
+                <h2>
+                  Calories: {mealsByPeriod.total.calories}, Protein:{' '}
+                  {mealsByPeriod.total.protein}g, Carbs:{' '}
+                  {mealsByPeriod.total.carbs}g, Fats:{' '}
+                  {mealsByPeriod.total.fat}g{' '}
+                </h2>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <p>Loading...</p>
       )}
     </div>
   );
+  
+  
 }
 
 export default WeeklyMeals;

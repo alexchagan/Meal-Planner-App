@@ -1,10 +1,10 @@
 import React from 'react';  
 import { useNavigate } from 'react-router-dom';  
-import SignIn from '../components/SignIn'  
-import { Button } from '@mui/material'  
+import SignIn from '../components/SignIn'    
 import '../css/MainPage.css'  
+import '../css/Buttons.css'  
 import logo from '../assets/logo.png'
-import background from '../assets/background.jpg'
+
   
 function MainPage() {  
   
@@ -17,7 +17,6 @@ function MainPage() {
     const goToCurrentMeals = () => {  
         navigate('/currentmeals');  
     };      
-    // <button class="button-64" role="button"><span class="text">Button 64</span></button>
     return (  
         <div className="main-page" >  
             <img className='logo' src={logo}  alt="Logo" />  

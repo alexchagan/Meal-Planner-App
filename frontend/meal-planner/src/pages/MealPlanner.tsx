@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import {TextField} from '@mui/material';
+import { useNavigate } from 'react-router-dom'; 
+import DeleteIcon from '@mui/icons-material/Delete';
+import HomeIcon from '@mui/icons-material/Home';
 
 import {endOfWeek, isWithinInterval, startOfWeek} from "date-fns";
 import {DayPicker, Row, RowProps} from "react-day-picker";
 import { addDays} from 'date-fns';
 
 import "react-day-picker/dist/style.css";
-import '../css/MealPlanner.css'  
+import '../css/MealPlanner.css';  
+import '../css/Buttons.css';
 
 import FoodItem from '../interfaces/FoodItem';
 import MealData from '../interfaces/MealData';
@@ -23,7 +27,16 @@ function CurrentWeekRow(props: RowProps) {
     return <Row {...props} />;
   }
 
+  
+
 const MealPlanner = () => {
+
+  const navigate = useNavigate();  
+  
+  const goToMainPage = () => {  
+      navigate('/');  
+  }; 
+
   const [mealData, setMealData] = useState<MealData>({
     morning: [],
     afternoon: [],
@@ -99,11 +112,18 @@ const MealPlanner = () => {
   
     
     <div className='main'>
-        
-      
-  
+      <div style={{alignContent:'flex-start', marginBottom:'10px'}}>
+      <button className="button-61" role="button" onClick={goToMainPage} ><HomeIcon/></button> 
+      </div>
 
-      <div className='container'>
+      <div className='box'>
+      <p style={{fontSize: '16px'}}><strong>What's a Common meal?</strong></p>
+      <p style={{fontSize: '13px'}}>* Specify the quantity of each food item</p>
+      <p style={{fontSize: '13px'}}>* If not specified, default quantity is 100g</p>
+      <p style={{fontSize: '13px'}}>* Example: 50g brisket and 2 bananas</p>
+      </div>
+
+      <div>
         <DayPicker className='box'
         components={{ Row: CurrentWeekRow }}
         showOutsideDays
@@ -272,14 +292,14 @@ const MealPlanner = () => {
                   </>
                 )}
 
-                <button onClick={() => removeRow(section, index)}>-</button>
+                <button style={{ marginLeft: '10px', height: '40px' }} className="button-61" onClick={() => removeRow(section, index)}><DeleteIcon/></button>
               </div>
             ))}
             <button className="button-61" onClick={() => addRow(section)}>Add Meal</button>
           </div>
         );
       })}
-      <button className='button-28' onClick={sendDataToBackend}>Confirm</button>
+      <button style={{ marginTop: '10px' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
       </div>
     </div>
   );
