@@ -7,10 +7,15 @@ meals = Blueprint('meals', __name__)
 
 @meals.route('/receive_data', methods=['POST'])
 def receive_data():
+    """
+    Endpoint to receive meal data from the frontend and store it in the database.
+
+    Returns:
+        Response: JSON response indicating the success of the operation.
+    """
     data = request.json
     print("Received data from frontend:", data)
     
-    # Here you can process the received data as needed
     meals = utils.json_to_meal_objects(data)
 
     for meal_data in meals:
@@ -19,9 +24,18 @@ def receive_data():
         else:
             meal_data.nutritional_values_api()
         
-        meal_row = MealSQL(user_id=session.get('user_id'), date=meal_data.date, type=meal_data.type, period=meal_data.period,
-                    meal=meal_data.meal, serving=meal_data.serving, cal=meal_data.cal,
-                    protein=meal_data.protein, carb=meal_data.carb, fat=meal_data.fat)
+        meal_row = MealSQL(
+            user_id=session.get('user_id'),
+            date=meal_data.date,
+            type=meal_data.type,
+            period=meal_data.period,
+            meal=meal_data.meal,
+            serving=meal_data.serving,
+            cal=meal_data.cal,
+            protein=meal_data.protein,
+            carb=meal_data.carb,
+            fat=meal_data.fat
+        )
         
         db.session.add(meal_row)
         db.session.commit()
@@ -32,6 +46,12 @@ from collections import defaultdict
 
 @meals.route('/send_weekly_meals', methods=['GET', 'POST'])
 def send_weekly_meals():
+    """
+    Endpoint to retrieve and send weekly meals data to the frontend.
+
+    Returns:
+        Response: JSON response containing weekly meals data.
+    """
     # Retrieve current days of the week
     current_days = utils.get_dates_of_week()
     user_id = session.get('user_id')
@@ -76,6 +96,12 @@ def send_weekly_meals():
 
 @meals.route('/remove_meal', methods=['POST'])
 def receive_weekly_meals():
+    """
+    Endpoint to receive requests for removing meals from the database.
+
+    Returns:
+        Response: JSON response indicating the success of the operation.
+    """
     data = request.json
     date = data.get('date')
     period = data.get('period')
@@ -94,7 +120,6 @@ def receive_weekly_meals():
     except Exception as e:
         # Handle any errors that might occur during the deletion process
         return jsonify({'message': 'Error removing meal', 'error': str(e)}), 500
-
-    # Do something with the received JSON data
+    
     print(data)
     return '', 204

@@ -1,34 +1,56 @@
 import requests
 
 class Meal:
-    def __init__(self, date, type, period, meal, serving, cal, protein, carb, fat) -> None:
+    def __init__(self, date, type, period, meal, serving, cal, protein, carb, fat):
+        """
+        Initialize Meal object.
+
+        Args:
+            date (str): Date of the meal.
+            type (str): Type of the meal.
+            period (str): Period of the day (e.g., morning, afternoon).
+            meal (str): Name of the meal.
+            serving (float): Serving size of the meal (in grams).
+            cal (float): Calories content of the meal.
+            protein (float): Protein content of the meal (in grams).
+            carb (float): Carbohydrates content of the meal (in grams).
+            fat (float): Fat content of the meal (in grams).
+        """
         self.date = date
         self.type = type
         self.period = period
         self.meal = meal
         self.serving = float(serving)
-        self.cal =  float(cal)
-        self.protein =  float(protein)
-        self.carb =  float(carb)
-        self.fat =  float(fat)
+        self.cal = float(cal)
+        self.protein = float(protein)
+        self.carb = float(carb)
+        self.fat = float(fat)
 
     def fix_decimals(self):
-        self.serving = float("{:.3f}".format(float(self.serving)))
-        self.cal = float("{:.3f}".format(float(self.cal)))
-        self.protein = float("{:.3f}".format(float(self.protein)))
-        self.carb = float("{:.3f}".format(float(self.carb)))
-        self.fat = float("{:.3f}".format(float(self.fat)))
+        """
+        Round nutritional values to three decimal places.
+        """
+        self.serving = round(self.serving, 3)
+        self.cal = round(self.cal, 3)
+        self.protein = round(self.protein, 3)
+        self.carb = round(self.carb, 3)
+        self.fat = round(self.fat, 3)
 
     def update_nutritional_values(self):
-        # Calculate new values based on serving size
+        """
+        Update nutritional values based on serving size.
+        """
         serving_factor = self.serving / 100.0
         self.cal *= serving_factor
         self.protein *= serving_factor
         self.carb *= serving_factor
         self.fat *= serving_factor
         self.fix_decimals()
-    
+
     def nutritional_values_api(self):
+        """
+        Retrieve nutritional values from an external API.
+        """
         url = "https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition"
         headers = {
             "X-RapidAPI-Key": "096448c304mshd918b5bbf4f9eddp13a329jsn97df6f0ab30b",
@@ -48,9 +70,8 @@ class Meal:
         except requests.exceptions.RequestException as e:
             return {"error": "Failed to fetch data from API"}
 
-
     def __str__(self):
+        """
+        Return string representation of Meal object.
+        """
         return f"Meal: {self.meal}\nDate: {self.date}\nType: {self.type}\nPeriod: {self.period}\nServing: {self.serving}\nCalories: {self.cal}\nProtein: {self.protein}\nCarbohydrates: {self.carb}\nFat: {self.fat}"
-    
-      
-        

@@ -3,10 +3,27 @@ from datetime import datetime, timedelta
 import pytz
 
 def convert_date_simple(date):
+    """
+    Convert date string to a simplified format (YYYY-MM-DD).
+
+    Args:
+        date (str): Date string in ISO format.
+
+    Returns:
+        str: Simplified date string.
+    """
     return date.split('T')[0]
 
 def json_to_meal_objects(json_item):
-    
+    """
+    Convert JSON data to a list of Meal objects.
+
+    Args:
+        json_item (dict): JSON data containing meal information.
+
+    Returns:
+        list: List of Meal objects.
+    """
     date = convert_date_simple(json_item['date'])
     meals = []
 
@@ -18,6 +35,12 @@ def json_to_meal_objects(json_item):
     return meals
 
 def get_dates_of_week():
+    """
+    Get the dates of the current week.
+
+    Returns:
+        list: List of date strings in YYYY-MM-DD format representing the current week.
+    """
     # Get today's date in Israel time zone
     tz = pytz.timezone('Israel')
     today = datetime.now(tz)
@@ -34,4 +57,3 @@ def get_dates_of_week():
         days.append(day.strftime('%Y-%m-%d'))
 
     return days
-
