@@ -47,7 +47,7 @@ margin-right:auto;
 
 transform: translateY(-2px);
 border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
-border-image-slice: 1; /* Make sure the entire border is filled with the gradient */
+border-image-slice: 1; 
 
 }
 

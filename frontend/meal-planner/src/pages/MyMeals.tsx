@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../css/MyMeals.css';
 import '../css/Buttons.css';  
+import { useNavigate } from 'react-router-dom'; 
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
+import HomeIcon from '@mui/icons-material/Home';
 
 interface Meal {
   meal: string;
@@ -29,6 +32,12 @@ interface MealsByDate {
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
+
+  const navigate = useNavigate();  
+  
+  const goToMainPage = () => {  
+      navigate('/');  
+  }; 
 
   useEffect(() => {
     // Fetch data from your Flask backend
@@ -96,7 +105,8 @@ function WeeklyMeals() {
     <div>
       {weeklyMeals ? (
         <div>
-          <div className='buttons'>
+          <button className="button-61 home" role="button" onClick={goToMainPage} ><HomeIcon/></button>
+          <div className='buttons'> 
             <button className="button-61 left" onClick={handlePrevDate}><ArrowBackIcon/></button>
             <button className='button-61 right' onClick={handleNextDate}><ArrowForwardIcon/></button>
           </div>
@@ -108,12 +118,13 @@ function WeeklyMeals() {
                 {['morning', 'afternoon', 'evening'].map(period => {
                   const meals = mealsByPeriod[period];
                   if (!meals || meals.length === 0) return null; // Don't show the period if there are no meals
+                  const capitalizedPeriod = period.charAt(0).toUpperCase() + period.slice(1);
                   return (
                     <div key={period}>
-                      <h3 className='period-header'>{period}</h3>
+                      <h3 className='period-header'>{capitalizedPeriod}</h3>
                       <table className='meal-table'>
                         <thead>
-                          <tr>
+                          <tr style={{fontSize:'14px'}}>
                             <th>Meal</th>
                             <th>Grams</th>
                             <th>Calories</th>
@@ -149,12 +160,25 @@ function WeeklyMeals() {
                     </div>
                   );
                 })}
-                <h2>
-                  Calories: {mealsByPeriod.total.calories}, Protein:{' '}
-                  {mealsByPeriod.total.protein}g, Carbs:{' '}
-                  {mealsByPeriod.total.carbs}g, Fats:{' '}
-                  {mealsByPeriod.total.fat}g{' '}
-                </h2>
+                <div className="total-info">
+                <h2 style={{fontSize:'20px' , textDecoration: 'underline'}}>Total Daily Values</h2>
+                <div className="total-box">
+                  <div className="total-label">Calories:</div>
+                  <div className="total-value">{mealsByPeriod.total.calories}</div>
+                </div>
+                <div className="total-box">
+                  <div className="total-label">Protein (g):</div>
+                  <div className="total-value">{mealsByPeriod.total.protein}g</div>
+                </div>
+                <div className="total-box">
+                  <div className="total-label">Carbs (g):</div>
+                  <div className="total-value">{mealsByPeriod.total.carbs}g</div>
+                </div>
+                <div className="total-box">
+                  <div className="total-label">Fats (g):</div>
+                  <div className="total-value">{mealsByPeriod.total.fat}g</div>
+                </div>
+</div>
               </div>
             );
           })}
