@@ -10,7 +10,7 @@
 }
 
 .small-textbox{
-    width: 13ch;
+    width: 11ch;
     size: small;
   }
 
@@ -28,7 +28,7 @@ margin-bottom: 10px;
 font-size: 15px;
 text-align: left;
 padding: 3px;
-
+display: flex;
 }
 
 .container{

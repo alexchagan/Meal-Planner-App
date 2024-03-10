@@ -14,10 +14,8 @@ import '../css/Buttons.css';
 
 import FoodItem from '../interfaces/FoodItem';
 import MealData from '../interfaces/MealData';
-import { CompareSharp } from '@mui/icons-material';
 
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
@@ -178,9 +176,11 @@ const MealPlanner = () => {
                   />
                   Custom
                 </label>
+                {food.type === 'custom' && <p style={{marginTop:'11px',marginLeft:'15px'}}>(per 100g)</p>}
              </div>
 
                 <TextField
+                  style={{width:'170px'}}
                   label = "Meal Descirption"
                   value={food.food}
                   onChange={(e) => handleChange(section, index, 'food', e.target.value)}
@@ -204,7 +204,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Calories 100g"
+                      style={{width:'70px'}}
+                      label = "Calories"
                       type="text"
                       value={food.calPer100g}
                       onChange={(e) => handleChange(section, index, 'calPer100g', e.target.value)}
@@ -216,7 +217,8 @@ const MealPlanner = () => {
 
                    
                     <TextField
-                      label = "Protein 100g"
+                      style={{width:'65px'}}
+                      label = "Protein"
                       type="text"
                       value={food.proPer100g}
                       onChange={(e) => handleChange(section, index, 'proPer100g', e.target.value)}
@@ -227,7 +229,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Carbs 100g"
+                      style={{width:'60px'}}
+                      label = "Carbs"
                       type="text"
                       value={food.carbPer100g}
                       onChange={(e) => handleChange(section, index, 'carbPer100g', e.target.value)}
@@ -238,7 +241,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Fat 100g"
+                      style={{width:'60px'}}
+                      label = "Fat"
                       type="text"
                       value={food.fatPer100g}
                       onChange={(e) => handleChange(section, index, 'fatPer100g', e.target.value)}
@@ -263,7 +267,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Calories 100g"
+                      style={{width:'70px'}}
+                      label = "Calories"
                       type="text"
                       value="0"
                       disabled
@@ -275,7 +280,8 @@ const MealPlanner = () => {
 
                    
                     <TextField
-                      label = "Protein 100g"
+                      style={{width:'65px'}}
+                      label = "Protein"
                       type="text"
                       value="0"
                       disabled
@@ -286,7 +292,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Carbs 100g"
+                      style={{width:'60px'}}
+                      label = "Carbs"
                       type="text"
                       value="0"
                       disabled
@@ -297,7 +304,8 @@ const MealPlanner = () => {
                     />
 
                     <TextField
-                      label = "Fat 100g"
+                      style={{width:'60px'}}
+                      label = "Fat"
                       type="text"
                       value="0"
                       disabled
