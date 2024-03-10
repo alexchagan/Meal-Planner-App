@@ -1,4 +1,4 @@
-interface FoodItem {
+interface MealDesc {
     food: string;
     type: string;
     serving: string;
@@ -8,5 +8,5 @@ interface FoodItem {
     fatPer100g: string;
   }
 
-  export default FoodItem;
+  export default MealDesc;
 

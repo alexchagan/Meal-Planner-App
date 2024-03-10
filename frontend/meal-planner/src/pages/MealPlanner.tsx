@@ -12,8 +12,8 @@ import "react-day-picker/dist/style.css";
 import '../css/MealPlanner.css';  
 import '../css/Buttons.css';
 
-import FoodItem from '../interfaces/FoodItem';
-import MealData from '../interfaces/MealData';
+import MealDesc from '../interfaces/MealDesc';
+import MealPeriods from '../interfaces/MealPeriods';
 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -32,17 +32,13 @@ function CurrentWeekRow(props: RowProps) {
     return <Row {...props} />;
   }
 
-  
-
 const MealPlanner = () => {
-
   const navigate = useNavigate();  
-  
   const goToMainPage = () => {  
       navigate('/');  
   }; 
 
-  const [mealData, setMealData] = useState<MealData>({
+  const [MealPeriods, setMealPeriods] = useState<MealPeriods>({
     morning: [],
     afternoon: [],
     evening: []
@@ -58,30 +54,30 @@ const MealPlanner = () => {
     setOpenDialog(true);
   };
 
-  const addRow = (section: keyof MealData) => {
-    setMealData(prevState => ({
+  const addRow = (section: keyof MealPeriods) => {
+    setMealPeriods(prevState => ({
       ...prevState,
       [section]: [...prevState[section], { food: '', type: 'common', serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' }]
     }));
   };
 
-  const removeRow = (section: keyof MealData, index: number) => {
-    setMealData(prevState => ({
+  const removeRow = (section: keyof MealPeriods, index: number) => {
+    setMealPeriods(prevState => ({
       ...prevState,
       [section]: prevState[section].filter((_, i) => i !== index)
     }));
   };
 
-  const handleChange = (section: keyof MealData, index: number, field: keyof FoodItem, value: string) => {
+  const handleChange = (section: keyof MealPeriods, index: number, field: keyof MealDesc, value: string) => {
     if (field === 'type' && value === 'common') {
       // Set the values to '0' when 'common' radio option is selected
-      setMealData(prevState => ({
+      setMealPeriods(prevState => ({
         ...prevState,
         [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value, serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' } : food)
       }));
     } else {
       // For other fields or when 'custom' radio option is selected
-      setMealData(prevState => ({
+      setMealPeriods(prevState => ({
         ...prevState,
         [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value } : food)
       }));
@@ -93,9 +89,9 @@ const MealPlanner = () => {
       const selectedDatePlusOneDay = addDays(selectedDate, 1);
       const formattedData = {
         date: selectedDatePlusOneDay,
-        morning: mealData.morning.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
-        afternoon: mealData.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
-        evening: mealData.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
+        morning: MealPeriods.morning.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
+        afternoon: MealPeriods.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
+        evening: MealPeriods.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
       };
       
     
@@ -150,12 +146,12 @@ const MealPlanner = () => {
       </div>
 
       <div>
-      {Object.keys(mealData).map((sectionKey) => {
-        const section = sectionKey as keyof MealData;
+      {Object.keys(MealPeriods).map((sectionKey) => {
+        const section = sectionKey as keyof MealPeriods;
         return (
           <div key={section} className='comp'>
             <h2>{section.charAt(0).toUpperCase() + section.slice(1)} {section === "morning" && "🍳"} {section === "afternoon" && "🥩"} {section === "evening" && "🥣"}</h2>
-            {mealData[section].map((food, index) => (
+            {MealPeriods[section].map((food, index) => (
               <div className='row' key={index}>
                <div className='radio'>
                 <label>

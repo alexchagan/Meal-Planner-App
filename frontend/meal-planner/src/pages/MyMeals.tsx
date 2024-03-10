@@ -1,33 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+
 import '../css/MyMeals.css';
 import '../css/Buttons.css';  
-import { useNavigate } from 'react-router-dom'; 
+
+import MealsByDate from '../interfaces/MealsByDate';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
-
-interface Meal {
-  meal: string;
-  grams: number;
-  calories: number;
-  protein: number;
-  fat: number;
-  carbs: number;
-}
-
-interface MealsByDate {
-  [date: string]: {
-    [period: string]: Meal[];} &{
-    total: {
-      calories: number;
-      protein: number;
-      fat: number;
-      carbs: number;
-    };
-  };
-}
 
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
