@@ -8,8 +8,14 @@
   resize: horizontal;
   cursor: col-resize;
   width: 700px;
-  height: 1000px;
+  min-height: 700px;
   direction: ltr;
+  border: 1px solid black; 
+    border-radius: 10px;
+    border-bottom: 10px;
+    border-top: 10px;
+    border-width: 2px;
+    border-style:groove;
 }
 .weekly-meals-container {
     font-family: Arial, sans-serif;
@@ -36,6 +42,7 @@
 
   .home{
     margin-right: 640px;
+    margin-bottom: -15px;
   }
   .date-meals-container {
     margin-bottom: 20px;
