@@ -5,6 +5,8 @@ from .. import db
 
 meals = Blueprint('meals', __name__)  
 
+from flask import jsonify, request
+
 @meals.route('/receive_data', methods=['POST'])
 def receive_data():
     """
@@ -23,6 +25,16 @@ def receive_data():
             meal_data.update_nutritional_values()
         else:
             meal_data.nutritional_values_api()
+
+        # Check if serving amount is zero
+        if meal_data.serving == 0:
+            print("seving 0")
+            error_message = ""
+            if meal_data.type == 'custom':
+                error_message = "Custom meal missing serving amount"
+            elif meal_data.type == 'common':
+                error_message = f"{meal_data.meal} is not supported. Please check spelling or add a custom meal instead"
+            return jsonify({"error": error_message}), 400
         
         meal_row = MealSQL(
             user_id=session.get('user_id'),

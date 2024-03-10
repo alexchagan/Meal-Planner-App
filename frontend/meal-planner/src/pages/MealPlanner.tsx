@@ -14,6 +14,13 @@ import '../css/Buttons.css';
 
 import FoodItem from '../interfaces/FoodItem';
 import MealData from '../interfaces/MealData';
+import { CompareSharp } from '@mui/icons-material';
+
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 function CurrentWeekRow(props: RowProps) {
     const isDateInCurrentWeek = (dateToCheck: Date) => {
@@ -44,6 +51,14 @@ const MealPlanner = () => {
   });
 
   const [selectedDate, setSelectedDate] = useState<Date>(startOfWeek(new Date()));
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState('');
+
+  const openMessageDialog = (content: string) => {
+    setDialogContent(content);
+    setOpenDialog(true);
+  };
 
   const addRow = (section: keyof MealData) => {
     setMealData(prevState => ({
@@ -85,7 +100,7 @@ const MealPlanner = () => {
         evening: mealData.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
       };
       
-      // Assuming you have an API endpoint to send data to the backend
+    
       const response = await fetch('http://127.0.0.1:5000/receive_data', {
         credentials: 'include',
         method: 'POST',
@@ -97,14 +112,16 @@ const MealPlanner = () => {
 
       if (response.ok) {
         console.log('Data sent successfully to the backend');
-        // Handle success
-      } else {
+        openMessageDialog('Added meals successfully');  
+      } 
+      else {
         console.error('Failed to send data to the backend');
-        // Handle error
+        const responseData = await response.json();
+        openMessageDialog(JSON.stringify(responseData.error));   
       }
     } catch (error) {
       console.error('Error sending data to the backend:', error);
-      // Handle error
+     
     }
   };
 
@@ -300,7 +317,14 @@ const MealPlanner = () => {
         );
       })}
       <button style={{ marginTop: '10px' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
+
       </div>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogContent>{dialogContent}</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
