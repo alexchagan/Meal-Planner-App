@@ -25,6 +25,7 @@ The app provides a convenient way to plan and visualize meals for each day of th
 * Google Account Integration: Users can easily log in to the app using their Google account credentials.
 * Meal Planning: Users can create a daily meal schedule for the current week, specifying meals for morning, afternoon, and evening periods.
 * Weekly Meal Overview: The app provides a table format to view the weekly meal schedule, making it easy for users to see their planned meals for each day.
+* Database: Stores all user data and meal data for each week of each user.
 
 <!-- GETTING STARTED -->
 ## Getting Started
