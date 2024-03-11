@@ -12,8 +12,8 @@ def create_app():
     app.config["SESSION_COOKIE_SAMESITE"] = "None"
     app.config["SESSION_COOKIE_SECURE"] = True
   
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/meal_planner'  
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@db:3306/meal_planner' 
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:3306/meal_planner'  
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@db:3306/meal_planner' 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
       
