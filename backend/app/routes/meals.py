@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, session
 import app.utils as utils
 from ..models.MealSQL import MealSQL  
 from .. import db  
+from collections import defaultdict
 
 meals = Blueprint('meals', __name__)  
 
@@ -28,7 +29,6 @@ def receive_data():
 
         # Check if serving amount is zero
         if meal_data.serving == 0:
-            print("seving 0")
             error_message = ""
             if meal_data.type == 'custom':
                 error_message = "Custom meal missing serving amount"
@@ -53,8 +53,6 @@ def receive_data():
         db.session.commit()
   
     return jsonify({"message": "Data received successfully"}), 200
-
-from collections import defaultdict
 
 @meals.route('/send_weekly_meals', methods=['GET', 'POST'])
 def send_weekly_meals():
@@ -133,5 +131,3 @@ def receive_weekly_meals():
         # Handle any errors that might occur during the deletion process
         return jsonify({'message': 'Error removing meal', 'error': str(e)}), 500
     
-    print(data)
-    return '', 204

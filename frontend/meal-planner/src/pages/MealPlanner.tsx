@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import {TextField} from '@mui/material';
+import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; 
 import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
 
-import {endOfWeek, isWithinInterval, startOfWeek} from "date-fns";
-import {DayPicker, Row, RowProps} from "react-day-picker";
-import { addDays} from 'date-fns';
+import { startOfWeek } from "date-fns";
+import { DayPicker } from "react-day-picker";
 
 import "react-day-picker/dist/style.css";
 import '../css/MealPlanner.css';  
@@ -15,22 +14,14 @@ import '../css/Buttons.css';
 import MealDesc from '../interfaces/MealDesc';
 import MealPeriods from '../interfaces/MealPeriods';
 
+import { CurrentWeekRow } from '../components/CurrentWeekRow';
+
+import { formatMealPeriodData } from '../utils/mealPeriodUtils';
+
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-
-function CurrentWeekRow(props: RowProps) {
-    const isDateInCurrentWeek = (dateToCheck: Date) => {
-      const today = new Date();
-      const start = startOfWeek(today);
-      const end = endOfWeek(today);
-      return isWithinInterval(dateToCheck, { start, end });
-    };
-    const isNotCurrentWeek = props.dates.every((date) => !isDateInCurrentWeek(date));
-    if (isNotCurrentWeek) return <></>;
-    return <Row {...props} />;
-  }
 
 const MealPlanner = () => {
   const navigate = useNavigate();  
@@ -86,15 +77,8 @@ const MealPlanner = () => {
 
   const sendDataToBackend = async () => {
     try {
-      const selectedDatePlusOneDay = addDays(selectedDate, 1);
-      const formattedData = {
-        date: selectedDatePlusOneDay,
-        morning: MealPeriods.morning.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
-        afternoon: MealPeriods.afternoon.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g]),
-        evening: MealPeriods.evening.map(item => [item.food, item.type, item.serving, item.calPer100g, item.proPer100g, item.carbPer100g, item.fatPer100g])
-      };
+      const formattedData = formatMealPeriodData(selectedDate, MealPeriods);
       
-    
       const response = await fetch('http://127.0.0.1:5000/receive_data', {
         credentials: 'include',
         method: 'POST',
@@ -121,7 +105,6 @@ const MealPlanner = () => {
 
   return (
   
-    
     <div className='main'>
       <div style={{alignContent:'flex-start', marginBottom:'10px'}}>
       <button className="button-61" role="button" onClick={goToMainPage} ><HomeIcon/></button> 

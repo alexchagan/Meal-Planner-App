@@ -6,6 +6,7 @@
 # Python bytecode files
 *.pyc
 __pycache__/
+.pytest_cache
 
 ## ----- frontend -----
 
