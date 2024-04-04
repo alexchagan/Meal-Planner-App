@@ -12,8 +12,8 @@
 ## About The Project
 Welcome to the Meal Planner App! <br />
 This application allows users to create and manage their daily meal schedules for the current week. <br />
-Users can log in with their Google account to access the meal planning features. <br />
-The app provides a convenient way to plan and visualize meals for each day of the week. <br />
+The application can send simple meal descriptions to a third-party API and get full nutrition values. <br />
+The application provides a convenient way to plan and visualize meals for each day of the week. <br />
 
 <div align="center">
 <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/5bb981a6-0eea-4c44-a934-95832a35fa00>
@@ -26,6 +26,7 @@ The app provides a convenient way to plan and visualize meals for each day of th
 * Meal Planning: Users can create a daily meal schedule for the current week, specifying meals for morning, afternoon, and evening periods.
 * Weekly Meal Overview: The app provides a table format to view the weekly meal schedule, making it easy for users to see their planned meals for each day.
 * Database: Stores all user data and meal data for each week of each user.
+* Third party API: A Nutrition API that converts simple meal description into full nutritional values.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -70,6 +71,14 @@ The app provides a convenient way to plan and visualize meals for each day of th
  </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Nutrition API
+The Nutrition API extracts nutrition information from text using natural language processing.<br />
+From food blogs to menus to recipes, it can read any text and calculate the corresponding nutrition data.<br />
+An intelligent feature of this API is custom portioning: if your text specifies quantities of individual food items or ingredients, the algorithm will automatically scale the nutrition data in the result accordingly.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## Technologies Used 
 * React.js: Frontend framework for building the user interface.
