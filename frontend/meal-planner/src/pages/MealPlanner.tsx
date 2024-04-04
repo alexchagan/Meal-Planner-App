@@ -104,12 +104,9 @@ const MealPlanner = () => {
 
   return (
     <div className='main'>
-      <div style={{alignContent:'flex-start', marginBottom:'10px'}}>
-        <button className="button-61" role="button" onClick={goToMainPage}><HomeIcon/></button> 
-      </div>
-
+     <div className ='box-container'>
       <div className='box'>
-        <p style={{fontSize: '16px'}}><strong>What's a Common meal?</strong></p>
+        <p style={{fontSize: '16px'}}><strong>What's a Common meal? 🤔</strong></p>
         <p style={{fontSize: '13px'}}>* Specify the quantity of each food item</p>
         <p style={{fontSize: '13px'}}>* If not specified, default quantity is 100g</p>
         <p style={{fontSize: '13px'}}>* Example: 50g brisket and 2 bananas</p>
@@ -125,13 +122,19 @@ const MealPlanner = () => {
           {...(selectedDate && { selected: selectedDate })}
         />
       </div>
+     </div>
 
       <div className='sections-container'>
         {Object.keys(MealPeriods).map((sectionKey) => {
           const section = sectionKey as keyof MealPeriods;
           return (
             <div key={section} className='comp'>
-              <h2>{section.charAt(0).toUpperCase() + section.slice(1)} {section === "morning" && "🍳"} {section === "afternoon" && "🥩"} {section === "evening" && "🥣"}</h2>
+              <h2 style={{ textAlign: 'center' }}>
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {section === "morning" && "🍳"}
+                {section === "afternoon" && "🥩"}
+                {section === "evening" && "🥣"}
+              </h2>
               {MealPeriods[section].map((food, index) => (
                 <div className='row' key={index}>
                   <div className='radio'>
@@ -301,7 +304,7 @@ const MealPlanner = () => {
         })}
       </div>
 
-      <button style={{ marginTop: '10px' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
+      <button style={{ marginTop: '20px' , display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>{dialogContent}</DialogContent>

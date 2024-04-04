@@ -1,6 +1,5 @@
 .main {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
   padding: 20px;
 }
 
@@ -30,20 +29,36 @@
 .container {
   position: relative;
   top: -20px;
+  
+}
+
+.box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh; /* Adjust the height as needed */
 }
 
 .box {
   border: 2px solid;
-  padding: 10px;
+  padding: 13px;
   width: 283px;
-  height: 75px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  transform: translateY(-2px);
+  height: 100px; /* Adjust the height as needed */
+  margin: 0 0px; /* Add some horizontal margin between boxes */
   border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
   border-image-slice: 1;
+  background-color: rgba(255, 255, 255, 0.5);
 }
+
+.box:first-child {
+  margin-right: auto
+}
+
+.box:last-child {
+  margin-left: 100px;
+  margin-right: 565px;
+}
+
 
 .title {
   margin-bottom: 50px;
@@ -53,6 +68,8 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  background-color: #ffffffc2;
+  border-radius: 25px;
 }
 
 .remove {
@@ -60,11 +77,10 @@
   width: 10px;
   margin-top: -27px; 
   margin-left: -250px;
-
   align-items: center;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px, rgba(0, 0, 0, .14) 0 2px 2px 0, rgba(0, 0, 0, .12) 0 1px 5px 0;
-  
+  box-shadow: rgba(0, 0, 0, 0.829) 0 3px 1px -2px, rgba(0, 0, 0, 0.267) 0 2px 2px 0, rgba(0, 0, 0, 0.596) 0 1px 5px 0;
+  color: #5B42F3;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
