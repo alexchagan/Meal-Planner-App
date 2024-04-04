@@ -5,9 +5,8 @@
     border-radius: 8px;
     box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
     box-sizing: border-box;
-    color: #000000;
+    color: #3f058b;
     display: flex;
-    font-family: Phantomsans, sans-serif;
     font-size: 20px;
     justify-content: center;
     line-height: 1em;
@@ -30,7 +29,7 @@
   }
   
   .button-64 span {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.603);
     padding: 16px 24px;
     border-radius: 6px;
     width: 100%;
@@ -83,7 +82,7 @@
     touch-action: manipulation;
     vertical-align: middle;
     will-change: transform,opacity;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
   }
   
   .button-61:hover {
@@ -139,6 +138,7 @@
     touch-action: manipulation;
     width: 50%;
     will-change: transform;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
   }
   
   .button-28:disabled {

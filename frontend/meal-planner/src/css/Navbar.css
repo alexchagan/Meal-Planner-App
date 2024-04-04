@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #000000;
+  color: aliceblue;
+}
+  
+.site-title {
+  font-size: 1.5rem;
+  margin: 0;
+  margin-left: 26px;
+}
+
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+
+
+

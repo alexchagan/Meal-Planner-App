@@ -1,40 +1,67 @@
-.main-page {  
-    display: flex;  
-    flex-direction: column;  
-    align-items: center;  
-    justify-content: center;  
-    min-height: 70vh;  
-    background: #ecedfc;  
-    font-family: 'Roboto', sans-serif;  
-    background-image: url('../assets/background.jpg');
-    background-size: cover; 
-    background-position: center; 
-    margin-left:auto;
-    margin-right:auto;
-}  
-  
-.button-container button {  
-    margin: 0 10px;  
-}  
-
-.logo{
-    position:static;
-    width: 300px;
-    height: 280px;
-    margin-bottom: 20px;
-}
-
-.signin-container {
-    position:relative;
-    top: -480px; 
-    margin-right: 300px;
-  
+.main-page {
+    display: flex;
+    justify-content: left; 
+    align-items: left;
+    background: #ecedfc;
+    font-family: 'Roboto', sans-serif;
+    background-image: linear-gradient(rgba(131, 127, 127, 0.39), rgba(0, 0, 0, 0.4)), url('../assets/wallpaper.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
   }
-
-.btext {
-position: relative;
-font-size: 15px;
-bottom: -20px;
-font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
+.content-wrapper {
+  display: flex;
+  width: 50%;
+  
 }
 
+.content-container {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.829), rgba(255, 255, 255, 0));
+  min-height: 100vh;
+  align-items: center;
+  padding-left: 30px;
+  
+}
+
+.phrase-container {
+  text-align: left;
+}
+
+.phrase {
+  padding-bottom: 10px;
+  font-size: 3.0em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(100deg, #dd0ca9, #32159c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+.phrase span {
+  display: block;
+}
+
+.subtext{
+  color: #000000;
+  font-size: 1.2em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  padding-bottom: 10px;
+
+}
+.subtext span {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.signin {
+  position: absolute;
+  top: 61px;
+  right:3px;
+}
+
+.button-container{
+  
+}

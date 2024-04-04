@@ -1,36 +1,44 @@
-import React from 'react';  
-import { useNavigate } from 'react-router-dom';  
-import SignIn from '../components/SignIn'    
-import '../css/MainPage.css'  
-import '../css/Buttons.css'  
-import logo from '../assets/logo.png'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import SignIn from '../components/SignIn';
+import '../css/MainPage.css';
+import '../css/Buttons.css';
 
-  
-function MainPage() {  
-  
-    const navigate = useNavigate();  
-  
-    const goToMealPlanner = () => {  
-        navigate('/mealplanner');  
-    };    
-  
-    const goToCurrentMeals = () => {  
-        navigate('/currentmeals');  
-    };      
-    return (  
-        <div className="main-page" >  
-            <img className='logo' src={logo}  alt="Logo" />  
-               
-                <button className="button-64" role="button"><span className="text" onClick={goToMealPlanner} >Add Meals 🍎</span></button>   
-                <button className="button-64" role="button"><span className="text" onClick={goToCurrentMeals} >Weekly Meals 📅</span></button> 
-             <div className='signin-container'>
-            <SignIn/>  
-            </div>
-            
-            <h1 className='btext' >Made by Alex Chagan</h1>
-            
-        </div>      
-    );  
-};  
-  
-export default MainPage; 
+function MainPage() {
+  const navigate = useNavigate();
+
+  const goToMealPlanner = () => {
+    navigate('/mealplanner');
+  };
+
+  return (
+    <div className="main-page">
+         <div className='signin'>
+      <SignIn/>
+      </div>
+      <div className="content-wrapper">
+        
+        <div className="content-container">
+          <div className="phrase-container">
+          <h1 className="phrase">
+                <span>Nutrition Simplified</span>
+                <span>Meal Planning Amplified</span>
+          </h1>
+          <p className="subtext">
+            <span>Effortlessly plan your meals for the entire week,</span>
+            <span>track your progress, and achieve your health goals</span>
+            <span>with our intuitive nutrition companion.</span>
+          </p>
+          </div>
+          <div className="button-container">
+            <button className="button-64" role="button" onClick={goToMealPlanner}>
+              <span className="text">Schedule Your Meals 🍎</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default MainPage;
