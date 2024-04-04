@@ -76,7 +76,7 @@ The application provides a convenient way to plan and visualize meals for each d
 The Nutrition API extracts nutrition information from text using natural language processing.<br />
 From food blogs to menus to recipes, it can read any text and calculate the corresponding nutrition data.<br />
 An intelligent feature of this API is custom portioning: if your text specifies quantities of individual food items or ingredients, the algorithm will automatically scale the nutrition data in the result accordingly.
-
+https://api-ninjas.com/api/nutrition
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
