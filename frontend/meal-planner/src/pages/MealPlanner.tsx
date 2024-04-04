@@ -295,7 +295,7 @@ const MealPlanner = () => {
                   <button  className="remove" onClick={() => removeRow(section, index)}><DeleteIcon/></button>
                 </div>
               ))}
-              <button className="button-61" onClick={() => addRow(section)}>Add Meal</button>
+              <button style={{display:'block', margin:'0 auto'}} className="button-61" onClick={() => addRow(section)}>Add Meal</button>
             </div>
           );
         })}
