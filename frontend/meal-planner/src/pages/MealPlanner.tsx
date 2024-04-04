@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; 
 import DeleteIcon from '@mui/icons-material/Delete';
-import HomeIcon from '@mui/icons-material/Home';
-
 import { startOfWeek } from "date-fns";
 import { DayPicker } from "react-day-picker";
 
@@ -25,10 +23,7 @@ import Button from '@mui/material/Button';
 
 const MealPlanner = () => {
   const navigate = useNavigate();  
-  const goToMainPage = () => {  
-      navigate('/');  
-  }; 
-
+ 
   const [MealPeriods, setMealPeriods] = useState<MealPeriods>({
     morning: [],
     afternoon: [],
@@ -304,7 +299,7 @@ const MealPlanner = () => {
         })}
       </div>
 
-      <button style={{ marginTop: '20px' , display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
+      <button style={{ marginTop: '25px' , display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>{dialogContent}</DialogContent>

@@ -3,123 +3,129 @@
   line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 20px;
+  margin: 20px auto;
   padding: 10px;
   resize: horizontal;
   cursor: col-resize;
-  width: 700px;
   min-height: 700px;
   direction: ltr;
-  border: 1px solid black; 
-    border-radius: 10px;
-    border-bottom: 10px;
-    border-top: 10px;
-    border-width: 2px;
-    border-style:groove;
+  text-align: center;
+  width: 800px;
+  padding: 5px 10px 10px;
+  
 }
+
 .weekly-meals-container {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    border: 2px solid black;
-    margin-bottom: 20px; 
-  }
-  .buttons{
-    position: relative;
-    margin-bottom: -85px;
-    display: flex;
-    justify-content: space-between;
-  }
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border: 2px solid black;
+  margin-bottom: 20px;
+  display: inline-block;
+  text-align: left;
+  
+}
 
-  .right {
-    margin-right: 220px;
-    top: -5px;
-  }
-  
-  .left {
-    margin-left: 220px;
-    top: -5px;
-  }
+.buttons {
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  right: 523px;
+  top: 80px; 
+  z-index: 999; 
+}
 
-  .home{
-    margin-right: 640px;
-    margin-bottom: -15px;
-  }
-  .date-meals-container {
-    margin-bottom: 20px;
-    margin-left:auto;
-  margin-right:auto;
-  }
-  
-  .date-header {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 50px;
-  }
-  
-  .period-header {
-    font-size: 20px;
-    color: #080808;
-    margin-bottom: 30px;
-  }
-  
-  .meal-table {
-    font-family: 'Arial';
-    margin: 25px auto;
-    border-bottom: 2px solid #00cccc;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
-       0px 10px 20px rgba(0,0,0,0.05),
-       0px 20px 20px rgba(0,0,0,0.05),
-       0px 30px 20px rgba(0,0,0,0.05);
-    tr {
-       &:hover {
-        td {
-          color: #080808;
-        }
-      }
-    }
-    th, td {
-      color: #000000;
-      border: 1px solid #eee;
-      padding: 12px ;
-      border-collapse: collapse;
-    }
-    th {
-      background: #b259e6;
-      color: #fff;
-      text-transform: uppercase;
-      font-size: 12px;
-      &.last {
-        border-right: none;
-      }
-    }
-  }
-  
-  .loading-message {
-    font-style: italic;
-    color: #666;
-  }
+.right,
+.left {
+  margin: 0 80px;
+  top: -5px;
+}
 
-  .total-info {
-    background-color: #ffffff;
-    border: 2px solid #474545;
-    padding: 5px;
-    margin-top: 20px;
-    border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
-    border-image-slice: 1;
-  }
+.date-meals-container {
+  margin-bottom: 20px;
+  display: inline-block;
+  text-align: left;
+}
+
+.date-header {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.period-header {
+  font-size: 20px;
+  color: #080808;
+  margin-bottom: 30px;
+  text-align: center;
   
-  .total-box {
-    display:flex;
-    margin-bottom: 10px;
-  }
+}
+
+.meal-table {
+  font-family: 'Arial';
+  margin: 25px auto;
   
-  .total-label {
-    flex: 1;
-    font-weight: bold;
-    margin-right:-500px;
-  }
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05),
+    0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+  width: 800px;
+}
+
+.meal-table tr:hover td {
+  color: #080808;
+}
+
+.meal-table th,
+.meal-table td {
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 8px;
+  border-collapse: collapse;
+}
+
+.meal-table th {
+  background: #b259e6;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.meal-table th.last {
+  border-right: none;
+}
+
+.loading-message {
+  font-style: italic;
+  color: #666;
+  text-align: center;
+}
+
+.total-info {
+  background-color: #ffffff6e;
+  border: 2px solid #474545;
+  padding: 5px;
+  margin-top: 20px;
+  border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+  border-image-slice: 1;
+  display: inline-block;
+  text-align: left;
+  position: fixed;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.total-box {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.total-label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 10px;
   
-  .total-value {
-    flex: 1;
-  }
-  
+}
+
+.total-value {
+  flex: 1;
+}

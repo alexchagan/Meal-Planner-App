@@ -87,7 +87,6 @@ function WeeklyMeals() {
     <div>
       {weeklyMeals ? (
         <div>
-          <button className="button-61 home" role="button" onClick={goToMainPage} ><HomeIcon/></button>
           <div className='buttons'> 
             <button className="button-61 left" onClick={handlePrevDate}><ArrowBackIcon/></button>
             <button className='button-61 right' onClick={handleNextDate}><ArrowForwardIcon/></button>
@@ -160,7 +159,7 @@ function WeeklyMeals() {
                   <div className="total-label">Fats (g):</div>
                   <div className="total-value">{mealsByPeriod.total.fat}g</div>
                 </div>
-</div>
+                </div>
               </div>
             );
           })}
