@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import { stringify } from 'querystring';
-
+//s
 const UserProfile = () => {
   const [dailyGoals, setDailyGoals] = useState({
     dailyCals: 0,
