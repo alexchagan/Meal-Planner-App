@@ -33,7 +33,8 @@ def create_session():
 
         # If the user doesn't exist, insert the user into the database
         if not user_exists:
-            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email'])
+            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email']
+                               ,weekly_cals=0.0, weekly_prot=0.0, weekly_carb=0.0, weekly_fats=0.0)
             db.session.add(user_row)
             db.session.commit()
 
@@ -44,5 +45,5 @@ def create_session():
             "name": idinfo['name']
         }), 200
     except ValueError:
-        # Invalid token
+
         pass

@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage';
 import MealPlanner from './pages/MealPlanner';
 import WeeklyMeals from './pages/MyMeals';
 import Navbar from './components/Navbar';
+import UserProfile from './pages/UserProfile';
 import logo from './assets/logo.png';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/mealplanner" element={<MealPlanner />} />
             <Route path="/currentmeals" element={<WeeklyMeals />} />
+            <Route path="/userprofile" element={<UserProfile />} />
           </Routes>
         </GoogleOAuthProvider>
       </div>

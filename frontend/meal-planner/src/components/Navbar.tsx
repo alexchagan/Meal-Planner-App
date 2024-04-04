@@ -9,7 +9,7 @@ export default function Navbar() {
             </Link>
             <ul>
                 <li className='active'>
-                    <Link to="/">User Profile</Link>
+                    <Link to="/userprofile">User Profile</Link>
                 </li> 
                 <li>  
                     <Link to="/currentmeals">Current Week Meals</Link>
@@ -17,6 +17,7 @@ export default function Navbar() {
                 <li>
                     <Link to="/">About</Link>
                 </li>
+                
             </ul>
         </nav>
     )

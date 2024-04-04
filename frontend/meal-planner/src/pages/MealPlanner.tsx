@@ -22,8 +22,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
 const MealPlanner = () => {
-  const navigate = useNavigate();  
- 
+    
   const [MealPeriods, setMealPeriods] = useState<MealPeriods>({
     morning: [],
     afternoon: [],

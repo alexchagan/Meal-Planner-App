@@ -103,7 +103,7 @@
 .total-info {
   background-color: #ffffffce;
   border: 2px solid #474545;
-  padding: 5px;
+  padding: 10px;
   margin-top: 20px;
   border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
   border-image-slice: 1;
