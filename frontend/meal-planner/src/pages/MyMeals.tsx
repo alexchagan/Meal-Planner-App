@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 
 import '../css/MyMeals.css';
 import '../css/Buttons.css';  
@@ -9,17 +8,10 @@ import MealsByDate from '../interfaces/MealsByDate';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
-import HomeIcon from '@mui/icons-material/Home';
 
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
-
-  const navigate = useNavigate();  
-  
-  const goToMainPage = () => {  
-      navigate('/');  
-  }; 
 
   useEffect(() => {
     // Fetch data from your Flask backend
