@@ -8,18 +8,16 @@ users = Blueprint('users', __name__)
 def get_daily_goals():
     try:
         data = request.json
-        calories = data['calories']
-        protein = data['protein']
-        carbs = data['carbs']
-        fats = data['fats']
-        
         user_id = session.get('user_id')
-        user = UserSQL.query.filter(UserSQL.id == user_id).first()
-
-        if user:
+        if user := UserSQL.query.filter(UserSQL.id == user_id).first():
+            calories = data['calories']
             user.weekly_cals = calories * 7.0
+            protein = data['protein']
             user.weekly_prot = protein * 7.0
+            carbs = data['carbs']
             user.weekly_carb = carbs * 7.0
+            fats = data['fats']
+
             user.weekly_fats = fats * 7.0
             db.session.commit()
 

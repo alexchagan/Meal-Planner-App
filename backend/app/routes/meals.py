@@ -117,11 +117,11 @@ def receive_weekly_meals():
     period = data.get('period')
     meal_name = data.get('meal')
     user_id = session.get('user_id')
-    
+
     try:
-        # Perform deletion based on provided conditions
-        meal_to_remove = MealSQL.query.filter_by(user_id=user_id, date=date, period=period, meal=meal_name).first()
-        if meal_to_remove:
+        if meal_to_remove := MealSQL.query.filter_by(
+            user_id=user_id, date=date, period=period, meal=meal_name
+        ).first():
             db.session.delete(meal_to_remove)
             db.session.commit()
             return jsonify({'message': 'Meal removed successfully'}), 200
