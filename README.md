@@ -56,7 +56,7 @@ The application provides a convenient way to plan and visualize meals for each d
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Features
 
 * Log In: Click on the "Log In with Google" button to log in to the app using your Google account.
 * Create Meal Schedule: Once logged in, navigate to the meal planner section to create your daily meal schedule. Choose the day of the week and specify meals for morning, afternoon, and evening periods. Choose between Common and Custom options for meal description.
