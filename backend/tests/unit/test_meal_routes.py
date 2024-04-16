@@ -11,7 +11,7 @@ from app.models.MealSQL import MealSQL
 
 class TestMealsRoutes(TestCase):
     def create_app(self):
-        app = create_app()
+        app = create_app(testing=True)
         app.config['TESTING'] = True
         return app
 

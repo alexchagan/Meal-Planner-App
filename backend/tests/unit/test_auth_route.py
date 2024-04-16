@@ -1,4 +1,3 @@
-import json
 from flask_testing import TestCase
 from unittest.mock import patch
 
@@ -11,7 +10,7 @@ from app.models.UserSQL import UserSQL
 
 class TestAuthRoutes(TestCase):
     def create_app(self):
-        app = create_app()
+        app = create_app(testing=True)
         app.config['TESTING'] = True
         return app
 

@@ -50,7 +50,7 @@ def receive_data():
         )
         
         db.session.add(meal_row)
-        db.session.commit()
+    db.session.commit()
   
     return jsonify({"message": "Data received successfully"}), 200
 
@@ -99,6 +99,8 @@ def send_weekly_meals():
             'fat': total_fat,
             'carbs': total_carbs
         }
+
+    
 
     # Send the JSON response to the frontend
     print(weekly_meals)
