@@ -61,9 +61,9 @@ The application provides a convenient way to plan and visualize meals for each d
 * Log In: Click on the "Log In with Google" button to log in to the app using your Google account.
 * Create Meal Schedule: Once logged in, navigate to the meal planner section to create your daily meal schedule. Choose the day of the week and specify meals for morning, afternoon, and evening periods. Choose between Common and Custom options for meal description.
  <div align="center">
-  <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/4b7ca843-a0ed-4219-ae80-a65d334f2815>
+  <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/835e4706-6d1d-4357-8262-1e435ff0446b>
  </div>
-   
+  
 * View Weekly Meals: To view your weekly meal schedule, navigate to the weekly meal overview section. You'll see a table format displaying your planned meals for each day of the week. And Total values for each day. 
  <div align="center">
   <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/2d2d37a6-74c4-4f6b-a4a3-d512b6dc266f>
