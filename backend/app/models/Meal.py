@@ -1,7 +1,7 @@
 import requests
 
 class Meal:
-    def __init__(self, date, type, period, meal, serving, cal, protein, carb, fat):
+    def __init__(self, date, period, meal):
         """
         Initialize Meal object.
 
@@ -17,14 +17,13 @@ class Meal:
             fat (float): Fat content of the meal (in grams).
         """
         self.date = date
-        self.type = type
         self.period = period
         self.meal = meal
-        self.serving = float(serving)
-        self.cal = float(cal)
-        self.protein = float(protein)
-        self.carb = float(carb)
-        self.fat = float(fat)
+        self.serving = 0.0
+        self.cal = 0.0
+        self.protein = 0.0
+        self.carb = 0.0
+        self.fat = 0.0
 
     def fix_decimals(self):
         """

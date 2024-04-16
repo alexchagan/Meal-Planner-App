@@ -9,16 +9,13 @@ export const formatMealPeriodData = (
   return {
     date: selectedDatePlusOneDay,
     morning: mealPeriods.morning.map(item => [
-      item.food, item.type, item.serving, item.calPer100g,
-      item.proPer100g, item.carbPer100g, item.fatPer100g
+      item.food
     ]),
     afternoon: mealPeriods.afternoon.map(item => [
-      item.food, item.type, item.serving, item.calPer100g,
-      item.proPer100g, item.carbPer100g, item.fatPer100g
+      item.food
     ]),
     evening: mealPeriods.evening.map(item => [
-      item.food, item.type, item.serving, item.calPer100g,
-      item.proPer100g, item.carbPer100g, item.fatPer100g
+      item.food
     ])
   };
 };

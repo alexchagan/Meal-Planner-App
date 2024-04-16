@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; 
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 import { startOfWeek } from "date-fns";
 import { DayPicker } from "react-day-picker";
 
@@ -30,7 +30,6 @@ const MealPlanner = () => {
   });
 
   const [selectedDate, setSelectedDate] = useState<Date>(startOfWeek(new Date()));
-
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState('');
 
@@ -42,7 +41,7 @@ const MealPlanner = () => {
   const addRow = (section: keyof MealPeriods) => {
     setMealPeriods(prevState => ({
       ...prevState,
-      [section]: [...prevState[section], { food: '', type: 'common', serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' }]
+      [section]: [...prevState[section], { food: '' }]
     }));
   };
 
@@ -54,19 +53,11 @@ const MealPlanner = () => {
   };
 
   const handleChange = (section: keyof MealPeriods, index: number, field: keyof MealDesc, value: string) => {
-    if (field === 'type' && value === 'common') {
-      // Set the values to '0' when 'common' radio option is selected
-      setMealPeriods(prevState => ({
-        ...prevState,
-        [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value, serving: '0', calPer100g: '0', proPer100g: '0', carbPer100g: '0', fatPer100g: '0' } : food)
-      }));
-    } else {
-      // For other fields or when 'custom' radio option is selected
+   
       setMealPeriods(prevState => ({
         ...prevState,
         [section]: prevState[section].map((food, i) => i === index ? { ...food, [field]: value } : food)
       }));
-    }
   };
 
   const sendDataToBackend = async () => {
@@ -98,9 +89,10 @@ const MealPlanner = () => {
 
   return (
     <div className='main'>
+     <button className='confirm button-28' onClick={sendDataToBackend}>Confirm Meals</button>
      <div className ='box-container'>
       <div className='box'>
-        <p style={{fontSize: '16px'}}><strong>What's a Common meal? 🤔</strong></p>
+        <p style={{fontSize: '16px'}}><strong>What's a Meal Description? 🤔</strong></p>
         <p style={{fontSize: '13px'}}>* Specify the quantity of each food item</p>
         <p style={{fontSize: '13px'}}>* If not specified, default quantity is 100g</p>
         <p style={{fontSize: '13px'}}>* Example: 50g brisket and 2 bananas</p>
@@ -123,7 +115,7 @@ const MealPlanner = () => {
           const section = sectionKey as keyof MealPeriods;
           return (
             <div key={section} className='comp'>
-              <h2 style={{ textAlign: 'center' }}>
+              <h2 style={{ textAlign: 'center'}}>
                 {section.charAt(0).toUpperCase() + section.slice(1)}
                 {section === "morning" && "🍳"}
                 {section === "afternoon" && "🥩"}
@@ -131,165 +123,17 @@ const MealPlanner = () => {
               </h2>
               {MealPeriods[section].map((food, index) => (
                 <div className='row' key={index}>
-                  <div className='radio'>
-                    <label>
-                      <input
-                        type="radio"
-                        value="common"
-                        checked={food.type === 'common'}
-                        onChange={() => handleChange(section, index, 'type', 'common')}
-                      />
-                      Common
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        value="custom"
-                        checked={food.type === 'custom'}
-                        onChange={() => handleChange(section, index, 'type', 'custom')}
-                      />
-                      Custom (per 100g)
-                    </label>
-                    {food.type === 'custom'}
-                  </div>
-
-                  <TextField
-                    style={{width:'150px'}}
-                    label="Meal Description"
-                    value={food.food}
-                    onChange={(e) => handleChange(section, index, 'food', e.target.value)}
-                    placeholder="Meal Description"
-                    size='small'
+                  
+                    <TextField
+                      style={{width:'200px'}}
+                      label="Meal Description"
+                      value={food.food}
+                      onChange={(e) => handleChange(section, index, 'food', e.target.value)}
+                      placeholder="Meal Description"
+                      size='small'   
+                      />            
                     
-                  />
-
-                  {food.type === 'custom' ? (
-                    <>
-                      <TextField
-                        style={{width:'66px'}}
-                        label="Serving"
-                        type="text"
-                        value={food.serving}
-                        onChange={(e) => handleChange(section, index, 'serving', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        defaultValue="0"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'70px'}}
-                        label="Calories"
-                        type="text"
-                        value={food.calPer100g}
-                        onChange={(e) => handleChange(section, index, 'calPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        defaultValue="0"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'65px'}}
-                        label="Protein"
-                        type="text"
-                        value={food.proPer100g}
-                        onChange={(e) => handleChange(section, index, 'proPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        defaultValue="0"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'60px'}}
-                        label="Carbs"
-                        type="text"
-                        value={food.carbPer100g}
-                        onChange={(e) => handleChange(section, index, 'carbPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        defaultValue="0"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'60px'}}
-                        label="Fat"
-                        type="text"
-                        value={food.fatPer100g}
-                        onChange={(e) => handleChange(section, index, 'fatPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        defaultValue="0"
-                        size="small"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <TextField
-                        style={{width:'66px'}}
-                        label="Serving"
-                        type="text"
-                        value="0"
-                        onChange={(e) => handleChange(section, index, 'serving', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        size="small"
-                        disabled
-                      />
-
-                      <TextField
-                        style={{width:'70px'}}
-                        label="Calories"
-                        type="text"
-                        value="0"
-                        disabled
-                        onChange={(e) => handleChange(section, index, 'calPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'65px'}}
-                        label="Protein"
-                        type="text"
-                        value="0"
-                        disabled
-                        onChange={(e) => handleChange(section, index, 'proPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'60px'}}
-                        label="Carbs"
-                        type="text"
-                        value="0"
-                        disabled
-                        onChange={(e) => handleChange(section, index, 'carbPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        size="small"
-                      />
-
-                      <TextField
-                        style={{width:'60px'}}
-                        label="Fat"
-                        type="text"
-                        value="0"
-                        disabled
-                        onChange={(e) => handleChange(section, index, 'fatPer100g', e.target.value)}
-                        placeholder=""
-                        className="small-textbox"
-                        size="small"
-                      />
-                    </>
-                  )}
-
-                  <button  className="remove" onClick={() => removeRow(section, index)}><DeleteIcon/></button>
+                  <button  className="remove" onClick={() => removeRow(section, index)}><CloseIcon/></button>
                 </div>
               ))}
               <button style={{display:'block', margin:'0 auto'}} className="button-61" onClick={() => addRow(section)}>Add Meal</button>
@@ -298,7 +142,7 @@ const MealPlanner = () => {
         })}
       </div>
 
-      <button style={{ marginTop: '25px' , display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button>
+      {/* <button style={{ display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button> */}
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>{dialogContent}</DialogContent>

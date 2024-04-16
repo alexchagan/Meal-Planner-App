@@ -22,10 +22,8 @@ def receive_data():
     meals = utils.json_to_meal_objects(data)
 
     for meal_data in meals:
-        if meal_data.type == 'custom':
-            meal_data.update_nutritional_values()
-        else:
-            meal_data.nutritional_values_api()
+        
+        meal_data.nutritional_values_api()
 
         # Check if serving amount is zero
         if meal_data.serving == 0:
@@ -39,7 +37,6 @@ def receive_data():
         meal_row = MealSQL(
             user_id=session.get('user_id'),
             date=meal_data.date,
-            type=meal_data.type,
             period=meal_data.period,
             meal=meal_data.meal,
             serving=meal_data.serving,

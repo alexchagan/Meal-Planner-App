@@ -17,7 +17,7 @@ html, body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(20, 19, 19, 0.822)), url('./assets/wallpaper.jpg');
+  background-image: linear-gradient(rgba(226, 221, 221, 0.829), rgba(196, 138, 181, 0.671)), url('./assets/wallpaper.jpg');
   background-size: cover;
   background-position: center;
 }

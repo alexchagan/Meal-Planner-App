@@ -10,26 +10,19 @@
 
 .comp {
   margin-bottom: 50px;
+  color: #000000;
 }
 
 .row {
   margin-bottom: 10px;
-
+  background-color: rgba(255, 255, 255, 0.933);
+  border: 1px solid;
 }
 
-.radio {
-  background-color: rgba(235, 217, 252, 0);
-  margin-bottom: 10px;
-  font-size: 15px;
-  text-align: left;
-  padding: 3px;
-  display: flex;
-}
 
 .container {
   position: relative;
   top: -20px;
-  
 }
 
 .box-container {
@@ -37,6 +30,7 @@
   justify-content: center;
   align-items: center;
   height: 20vh; /* Adjust the height as needed */
+  
 }
 
 .box {
@@ -68,19 +62,23 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  background-color: #ffffffc2;
   border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+.sections-container > * {
+  margin: 0 40px; 
 }
 
 .remove {
-  height: 20px; 
+  height: 25px; 
   width: 10px;
-  margin-top: -27px; 
-  margin-left: -250px;
+  margin-top: 8px; 
+  margin-left: -235px;
   align-items: center;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.829) 0 3px 1px -2px, rgba(0, 0, 0, 0.267) 0 2px 2px 0, rgba(0, 0, 0, 0.596) 0 1px 5px 0;
-  color: #5B42F3;
+  color: #ff0202;
   box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
@@ -96,4 +94,12 @@
   transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
   touch-action: manipulation;
   vertical-align: middle;
+}
+
+.confirm{
+  position: absolute;
+  right: 60px;
+  top: 90px;
+  background-color: rgb(255, 255, 255);
+  font-size: 16px;
 }
