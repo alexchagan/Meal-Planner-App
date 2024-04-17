@@ -7,7 +7,7 @@ import MealsByDate from '../interfaces/MealsByDate';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 
 function WeeklyMeals() {
   const [weeklyMeals, setWeeklyMeals] = useState<MealsByDate | null>(null);
@@ -119,12 +119,12 @@ function WeeklyMeals() {
                               <td>{meal.fat}</td>
                               <td>{meal.carbs}</td>
                               
-                                <button style={{ marginLeft: '5px', height: '30px', bottom:'-5px' }} className="button-61"
+                                <button style={{ marginLeft: '5px', height: '30px', bottom:'-5px', position:'relative' }} className="remove"
                                   onClick={() =>
                                     removeMeal(date, period, meal.meal)
                                   }
                                 >
-                                  <DeleteIcon/>
+                                  <CloseIcon/>
                                 </button> 
                             </tr>
                           ))}

@@ -133,7 +133,7 @@ const MealPlanner = () => {
                       size='small'   
                       />            
                     
-                  <button  className="remove" onClick={() => removeRow(section, index)}><CloseIcon/></button>
+                  <button style={{height: '25px', width: '10px', marginTop: '8px', marginLeft: '-235px'}}  className="remove" onClick={() => removeRow(section, index)}><CloseIcon/></button>
                 </div>
               ))}
               <button style={{display:'block', margin:'0 auto'}} className="button-61" onClick={() => addRow(section)}>Add Meal</button>
