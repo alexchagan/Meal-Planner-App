@@ -57,3 +57,16 @@ def get_dates_of_week():
         days.append(day.strftime('%Y-%m-%d'))
 
     return days
+
+def get_todays_date():
+    """
+    Get the today's date.
+
+    Returns:
+        list: List of date strings in YYYY-MM-DD format representing the current week.
+    """
+    # Get today's date in Israel time zone
+    tz = pytz.timezone('Israel')
+    return datetime.now(tz)
+
+    

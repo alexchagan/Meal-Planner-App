@@ -87,6 +87,36 @@ const MealPlanner = () => {
     }
   };
 
+  //TODO: Add option to fetch saved meals for the specific date and display them
+  const fetchMeals = async (date: Date) => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/send_daily_meals', {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date: date.toISOString() })
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        return {
+          morning: data.morning.map((meal: { food: string }) => ({ food: meal.food })),
+          afternoon: data.afternoon.map((meal: { food: string }) => ({ food: meal.food })),
+          evening: data.evening.map((meal: { food: string }) => ({ food: meal.food }))
+        };
+      } else {
+        console.error('Failed to fetch meals data from the backend');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching meals data from the backend:', error);
+      return null;
+    }
+  };
+
+  
   return (
     <div className='main'>
      <button className='confirm button-28' onClick={sendDataToBackend}>Confirm Meals</button>
@@ -121,6 +151,7 @@ const MealPlanner = () => {
                 {section === "afternoon" && "🥩"}
                 {section === "evening" && "🥣"}
               </h2>
+
               {MealPeriods[section].map((food, index) => (
                 <div className='row' key={index}>
                   
@@ -141,8 +172,6 @@ const MealPlanner = () => {
           );
         })}
       </div>
-
-      {/* <button style={{ display:'block', margin:'0 auto' }} className='button-28' onClick={sendDataToBackend}>Confirm</button> */}
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>{dialogContent}</DialogContent>

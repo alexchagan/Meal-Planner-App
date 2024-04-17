@@ -103,6 +103,38 @@ def send_weekly_meals():
     print(weekly_meals)
     return jsonify(weekly_meals)
 
+@meals.route('/send_daily_meals', methods=['GET', 'POST'])
+def send_daily_meals():
+    """
+    Endpoint to retrieve and send weekly meals data to the frontend.
+
+    Returns:
+        Response: JSON response containing weekly meals data.
+    """
+    # Retrieve current days of the week
+    data = request.json
+    current_date = utils.convert_date_simple(data['date'])
+    user_id = session.get('user_id')
+
+    # Retrieve meals for the current user and days
+    meals_query = MealSQL.query.filter(
+        MealSQL.user_id == user_id,
+        MealSQL.date == current_date
+    ).all()
+
+    # Organize the retrieved data into the desired JSON format
+    daily_meals = defaultdict(lambda: {'morning': [], 'afternoon': [], 'evening': []})
+
+    for meal in meals_query:
+        period = meal.period.lower()
+        daily_meals[meal.date][period].append({
+            'meal': meal.meal
+        })
+
+    # Send the JSON response to the frontend
+    print(daily_meals)
+    return jsonify(daily_meals)
+
 @meals.route('/remove_meal', methods=['POST'])
 def receive_weekly_meals():
     """
