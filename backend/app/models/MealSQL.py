@@ -1,11 +1,12 @@
 from ..database import db
 
+
 class MealSQL(db.Model):
     """
     Model class representing the Meals table in the database.
     """
 
-    __tablename__ = 'Meals'
+    __tablename__ = "Meals"
 
     meal_id = db.Column("id", db.Integer, primary_key=True)
     user_id = db.Column("user_id", db.String(30))

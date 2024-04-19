@@ -1,39 +1,29 @@
+from dataclasses import dataclass
 import requests
 from ..models.MealSQL import MealSQL
 
+
+@dataclass
 class Meal:
-    def __init__(self, date, period, meal):
-        """
-        Initialize Meal object.
+    _date: str
+    _period: str
+    _meal: str
+    _serving: float = 0.0
+    _cal: float = 0.0
+    _protein: float = 0.0
+    _carb: float = 0.0
+    _fat: float = 0.0
 
-        Args:
-            date (str): Date of the meal.
-            type (str): Type of the meal.
-            period (str): Period of the day (e.g., morning, afternoon).
-            meal (str): Name of the meal.
-            serving (float): Serving size of the meal (in grams).
-            cal (float): Calories content of the meal.
-            protein (float): Protein content of the meal (in grams).
-            carb (float): Carbohydrates content of the meal (in grams).
-            fat (float): Fat content of the meal (in grams).
-        """
-        self._date = date
-        self._period = period
-        self._meal = meal
-        self._serving = 0.0
-        self._cal = 0.0
-        self._protein = 0.0
-        self._carb = 0.0
-        self._fat = 0.0
-
-    def get_serving_amount(self):
+    @property
+    def serving(self):
         return self._serving
-    
-    def get_meal_description(self):
+
+    @property
+    def meal(self):
         return self._meal
-    
+
     def convert_to_sql_object(self, id):
-         
+
         return MealSQL(
             user_id=id,
             date=self._date,
@@ -43,10 +33,8 @@ class Meal:
             cal=self._cal,
             protein=self._protein,
             carb=self._carb,
-            fat=self._fat
+            fat=self._fat,
         )
-
-        
 
     def fix_decimals(self):
         """
@@ -76,18 +64,18 @@ class Meal:
         url = "https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition"
         headers = {
             "X-RapidAPI-Key": "096448c304mshd918b5bbf4f9eddp13a329jsn97df6f0ab30b",
-            "X-RapidAPI-Host": "nutrition-by-api-ninjas.p.rapidapi.com"
+            "X-RapidAPI-Host": "nutrition-by-api-ninjas.p.rapidapi.com",
         }
         try:
             response = requests.get(url, params={"query": self._meal}, headers=headers)
             response.raise_for_status()  # Raise an exception for 4xx/5xx status codes
             data = response.json()
             for food_item in data:
-                self._serving += food_item['serving_size_g']
-                self._cal += food_item['calories']
-                self._protein += food_item['protein_g']
-                self._carb += food_item['carbohydrates_total_g']
-                self._fat += food_item['fat_total_g']
+                self._serving += food_item["serving_size_g"]
+                self._cal += food_item["calories"]
+                self._protein += food_item["protein_g"]
+                self._carb += food_item["carbohydrates_total_g"]
+                self._fat += food_item["fat_total_g"]
             self.fix_decimals()
         except requests.exceptions.RequestException as e:
             return {"error": "Failed to fetch data from API"}

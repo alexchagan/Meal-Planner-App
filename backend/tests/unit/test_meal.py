@@ -3,13 +3,17 @@ import os
 from unittest.mock import patch
 import pytest
 
-backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(backend_dir)
 from app.models.Meal import Meal
 
+
 @pytest.fixture
 def meal():
-    return Meal("2023-06-08", "Custom", "Morning", "Oatmeal", 50.0, 150.0, 5.0, 25.0, 3.0)
+    return Meal(
+        "2023-06-08", "Custom", "Morning", "Oatmeal", 50.0, 150.0, 5.0, 25.0, 3.0
+    )
+
 
 class TestMeal:
     def test_fix_decimals(self, meal):
