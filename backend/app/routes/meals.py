@@ -18,33 +18,17 @@ def receive_data():
     """
     data = request.json
     print("Received data from frontend:", data)
-    
-    meals = utils.json_to_meal_objects(data)
+    meal_objects = utils.json_to_meal_objects(data)
 
-    for meal_data in meals:
+    for meal in meal_objects:
         
-        meal_data.nutritional_values_api()
+        meal.nutritional_values_api()
 
-        # Check if serving amount is zero
-        if meal_data.serving == 0:
-            error_message = ""
-            if meal_data.type == 'custom':
-                error_message = "Custom meal missing serving amount"
-            elif meal_data.type == 'common':
-                error_message = f"{meal_data.meal} is not supported. Please check spelling or add a custom meal instead"
+        if meal.get_serving_amount() == 0:        
+            error_message = f"{meal.get_meal_description()} is not supported. Please check spelling or add a custom meal instead"
             return jsonify({"error": error_message}), 400
         
-        meal_row = MealSQL(
-            user_id=session.get('user_id'),
-            date=meal_data.date,
-            period=meal_data.period,
-            meal=meal_data.meal,
-            serving=meal_data.serving,
-            cal=meal_data.cal,
-            protein=meal_data.protein,
-            carb=meal_data.carb,
-            fat=meal_data.fat
-        )
+        meal_row = meal.convert_to_sql_object(id=session.get('user_id'))
         
         db.session.add(meal_row)
     db.session.commit()

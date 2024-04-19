@@ -29,7 +29,7 @@
   justify-content: center;
   align-items: center;
   height: 20vh; /* Adjust the height as needed */
-  
+  margin-bottom: 20px;
 }
 
 .box {
@@ -41,6 +41,7 @@
   border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
   border-image-slice: 1;
   background-color: rgba(255, 255, 255, 0.5);
+  
 }
 
 .box:first-child {
@@ -66,7 +67,7 @@
 }
 
 .sections-container > * {
-  margin: 0 40px; 
+  margin:0 150px; 
 }
 
 .remove {

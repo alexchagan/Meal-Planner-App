@@ -19,7 +19,7 @@ def create_session():
         data = request.json
         token = data['credential']
         client_id = data['clientId']
-
+        print(data)
         # Verify the ID token received from the client
         idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), client_id)
         print(idinfo)
@@ -33,8 +33,8 @@ def create_session():
 
         # If the user doesn't exist, insert the user into the database
         if not user_exists:
-            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email']
-                               ,weekly_cals=0.0, weekly_prot=0.0, weekly_carb=0.0, weekly_fats=0.0)
+            user_row = UserSQL(id=idinfo['sub'], name=idinfo['name'], email=idinfo['email'], picture=idinfo['picture']
+                               ,daily_cals=0.0, daily_prot=0.0, daily_carb=0.0, daily_fats=0.0)
             db.session.add(user_row)
             db.session.commit()
 
