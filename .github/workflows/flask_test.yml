@@ -7,10 +7,10 @@ on:
 
 jobs:
   test:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./Meal-Planner-App/backend/
+        working-directory: ./Meal-Planner-App/
     
     strategy:
       matrix: 
@@ -29,8 +29,11 @@ jobs:
       
       - name: Install dependencies
         run: |
+          cd backend
           python -m pip install --upgrade pip
-          pip install -r ../requirements.txt
+          pip install -r requirements.txt
       
       - name: Test App code
-        run: pytest
+        run: | 
+          cd backend
+          pytest
