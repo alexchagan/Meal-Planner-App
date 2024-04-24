@@ -11,13 +11,13 @@
     
   }
   
-.content-wrapper {
+.main-page-content-wrapper {
   display: flex;
   width: 50%;
   
 }
 
-.content-container {
+.main-page-content-container {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.829), rgba(255, 255, 255, 0));
   min-height: 100vh;
   align-items: center;
@@ -25,11 +25,11 @@
   
 }
 
-.phrase-container {
+.main-page-phrase-container {
   text-align: left;
 }
 
-.phrase {
+.main-page-phrase {
   padding-bottom: 10px;
   font-size: 3.0em;
   line-height: 1.1;
@@ -39,11 +39,11 @@
   -webkit-text-fill-color: transparent;
 
 }
-.phrase span {
+.main-page-phrase span {
   display: block;
 }
 
-.subtext{
+.main-page-subtext{
   color: #000000;
   font-size: 1.2em;
   line-height: 1.1;
@@ -51,17 +51,8 @@
   padding-bottom: 10px;
 
 }
-.subtext span {
+.main-page-subtext span {
   display: block;
   margin-bottom: 0.5rem;
 }
 
-.signin {
-  position: absolute;
-  top: 61px;
-  right:3px;
-}
-
-.button-container{
-  
-}

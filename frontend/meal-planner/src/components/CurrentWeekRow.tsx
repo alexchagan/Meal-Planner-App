@@ -1,5 +1,5 @@
 import {endOfWeek, isWithinInterval, startOfWeek} from "date-fns";
-import {DayPicker, Row, RowProps} from "react-day-picker";
+import { Row, RowProps} from "react-day-picker";
 
 export function CurrentWeekRow(props: RowProps) {
     const isDateInCurrentWeek = (dateToCheck: Date) => {

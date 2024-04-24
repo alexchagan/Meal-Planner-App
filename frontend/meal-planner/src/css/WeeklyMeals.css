@@ -1,4 +1,4 @@
-.wrapper {
+.weekly-meals-wrapper {
   white-space: nowrap;
   line-height: 20px;
   overflow: hidden;
@@ -25,7 +25,7 @@
   
 }
 
-.buttons {
+.weekly-meals-buttons {
   position: sticky;
   display: flex;
   justify-content: center;
@@ -34,25 +34,25 @@
   z-index: 999; 
 }
 
-.right,
-.left {
+.weekly-meals-right,
+.weekly-meals-left {
   margin: 0 80px;
   top: -5px;
 }
 
-.date-meals-container {
+.weekly-meals-date-meals-container {
   margin-bottom: 20px;
   display: inline-block;
   text-align: left;
 }
 
-.date-header {
+.weekly-meals-date-header {
   font-size: 24px;
   color: #333;
   text-align: center;
 }
 
-.period-header {
+.weekly-meals-period-header {
   font-size: 20px;
   color: #080808;
   margin-bottom: 30px;
@@ -60,7 +60,7 @@
   
 }
 
-.meal-table {
+.weekly-meals-meal-table {
   font-family: 'Arial';
   margin: 25px auto;
   background-color: #ffffff98;
@@ -70,12 +70,12 @@
   border-radius: 10px;
 }
 
-.meal-table tr:hover td {
+.weekly-meals-meal-table tr:hover td {
   color: #080808;
 }
 
-.meal-table th,
-.meal-table td {
+.weekly-meals-meal-table th,
+.weekly-meals-meal-table td {
   color: #000000;
   border: 1px solid #000000;
   padding: 8px;
@@ -83,24 +83,24 @@
   border-radius: 5px;
 }
 
-.meal-table th {
+.weekly-meals-meal-table th {
   background: #b259e6;
   color: #ffffff;
   text-transform: uppercase;
   font-size: 10px;
 }
 
-.meal-table th.last {
+.weekly-meals-meal-table th.last {
   border-right: none;
 }
 
-.loading-message {
+.weekly-meals-loading-message {
   font-style: italic;
   color: #666;
   text-align: center;
 }
 
-.total-info {
+.weekly-meals-total-info {
   background-color: #ffffffce;
   border: 2px solid #474545;
   padding: 10px;
@@ -115,19 +115,19 @@
   transform: translateY(-50%);
 }
 
-.total-box {
+.weekly-meals-total-box {
   display: flex;
   margin-bottom: 10px;
   justify-content: center;
 }
 
-.total-label {
+.weekly-meals-total-label {
   flex: 1;
   font-weight: bold;
   margin-right: 10px;
   
 }
 
-.total-value {
+.weekly-meals-total-value {
   flex: 1;
 }

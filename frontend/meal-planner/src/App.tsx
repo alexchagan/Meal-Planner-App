@@ -3,10 +3,10 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import MainPage from './pages/MainPage';
-import MealPlanner from './pages/MealPlanner';
-import WeeklyMeals from './pages/MyMeals';
+import MealPlanner from './pages/MealPlannerPage';
+import WeeklyMeals from './pages/WeeklyMealsPage';
 import Navbar from './components/Navbar';
-import UserProfile from './pages/UserProfile';
+import UserProfile from './pages/UserProfilePage';
 import logo from './assets/logo.png';
 
 function App() {

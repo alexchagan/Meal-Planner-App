@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
+import React from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import '../css/SignIn.css'  
 
-function SignIn() {
-
-  const [currentUser, setCurrentUser] = useState(null);
+export default function SignIn() {
 
   const sendCredentialToBackend = async (credential: any, clientId: any) => {
     try {
@@ -22,7 +20,7 @@ function SignIn() {
         console.log('Credential sent to backend successfully');
         console.log(responseData);
         console.log('User ID:', responseData.user_id);
-        setCurrentUser(responseData.name);
+
       } else {
         console.error('Failed to send credential to backend');
       }
@@ -42,16 +40,8 @@ function SignIn() {
           console.log('Login Failed');
         }}
         
-        
       /> 
-     
-      {/* {currentUser && <p className='logged-in-text'>Logged in as: {currentUser}</p>} */}
-      
-      
-
     </div>
     
   );
 }
-
-export default SignIn;

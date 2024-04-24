@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import '../css/MyMeals.css';
+import '../css/WeeklyMeals.css';
 import '../css/Buttons.css';  
 
 import MealsByDate from '../interfaces/MealsByDate';
@@ -45,13 +45,17 @@ function WeeklyMeals() {
       .then(response => {
         // Handle response from backend
         if (response.ok) {
-          // If successful, remove the row from the UI
-          const tableRow = document.getElementById(
-            `${date}-${period}-${meal}`
-          );
-          if (tableRow) {
-            tableRow.remove();
-          }
+          // If successful, update the weeklyMeals state
+          setWeeklyMeals(prevMeals => {
+            if (prevMeals) {
+              const updatedMeals = { ...prevMeals };
+              updatedMeals[date][period] = updatedMeals[date][period].filter(
+                m => m.meal !== meal
+              );
+              return updatedMeals;
+            }
+            return prevMeals;
+          });
         } else {
           throw new Error('Failed to remove meal');
         }
@@ -79,23 +83,23 @@ function WeeklyMeals() {
     <div>
       {weeklyMeals ? (
         <div>
-          <div className='buttons'> 
-            <button className="button-61 left" onClick={handlePrevDate}><ArrowBackIcon/></button>
-            <button className='button-61 right' onClick={handleNextDate}><ArrowForwardIcon/></button>
+          <div className='weekly-meals-buttons'> 
+            <button className="button-61 weekly-meals-left" onClick={handlePrevDate}><ArrowBackIcon/></button>
+            <button className='button-61 weekly-meals-right' onClick={handleNextDate}><ArrowForwardIcon/></button>
           </div>
           {Object.entries(weeklyMeals).map(([date, mealsByPeriod], index) => {
             if (index !== selectedDateIndex) return null;
             return (
-              <div key={date} className='wrapper'>
-                <h2 className='date-header'>{date}</h2>
+              <div key={date} className='weekly-meals-wrapper'>
+                <h2 className='weekly-meals-date-header'>{date}</h2>
                 {['morning', 'afternoon', 'evening'].map(period => {
                   const meals = mealsByPeriod[period];
                   if (!meals || meals.length === 0) return null; // Don't show the period if there are no meals
                   const capitalizedPeriod = period.charAt(0).toUpperCase() + period.slice(1);
                   return (
                     <div key={period}>
-                      <h3 className='period-header'>{capitalizedPeriod}</h3>
-                      <table className='meal-table'>
+                      <h3 className='weekly-meals-period-header'>{capitalizedPeriod}</h3>
+                      <table className='weekly-meals-meal-table'>
                         <thead>
                           <tr style={{fontSize:'14px'}}>
                             <th>Meal</th>
@@ -119,7 +123,8 @@ function WeeklyMeals() {
                               <td>{meal.fat}</td>
                               <td>{meal.carbs}</td>
                               
-                                <button style={{ marginLeft: '5px', height: '30px', bottom:'-5px', position:'relative' }} className="remove"
+                                <button style={{ marginLeft: '5px', height: '30px', bottom:'-5px', position:'relative' }}
+                                 className="meal-planner-remove"
                                   onClick={() =>
                                     removeMeal(date, period, meal.meal)
                                   }
@@ -133,23 +138,23 @@ function WeeklyMeals() {
                     </div>
                   );
                 })}
-                <div className="total-info">
+                <div className="weekly-meals-total-info">
                 <h2 style={{fontSize:'20px' , textDecoration: 'underline'}}>Total Daily Values</h2>
-                <div className="total-box">
-                  <div className="total-label">Calories:</div>
-                  <div className="total-value">{mealsByPeriod.total.calories}</div>
+                <div className="weekly-meals-total-box">
+                  <div className="weekly-meals-total-label">Calories:</div>
+                  <div className="weekly-meals-total-value">{mealsByPeriod.total.calories}</div>
                 </div>
-                <div className="total-box">
-                  <div className="total-label">Protein (g):</div>
-                  <div className="total-value">{mealsByPeriod.total.protein}g</div>
+                <div className="weekly-meals-total-box">
+                  <div className="weekly-meals-total-label">Protein (g):</div>
+                  <div className="weekly-meals-total-value">{mealsByPeriod.total.protein}g</div>
                 </div>
-                <div className="total-box">
-                  <div className="total-label">Carbs (g):</div>
-                  <div className="total-value">{mealsByPeriod.total.carbs}g</div>
+                <div className="weekly-meals-total-box">
+                  <div className="weekly-meals-total-label">Carbs (g):</div>
+                  <div className="weekly-meals-total-value">{mealsByPeriod.total.carbs}g</div>
                 </div>
-                <div className="total-box">
-                  <div className="total-label">Fats (g):</div>
-                  <div className="total-value">{mealsByPeriod.total.fat}g</div>
+                <div className="weekly-meals-total-box">
+                  <div className="weekly-meals-total-label">Fats (g):</div>
+                  <div className="weekly-meals-total-value">{mealsByPeriod.total.fat}g</div>
                 </div>
                 </div>
               </div>

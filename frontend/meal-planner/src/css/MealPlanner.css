@@ -1,30 +1,30 @@
-.main {
+.meal-planner-main {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding: 20px;
 }
 
-.small-textbox {
+.meal-planner-small-textbox {
   width: 11ch;
   size: small;
 }
 
-.comp {
+.meal-planner-comp {
   margin-bottom: 50px;
   color: #000000;
 }
 
-.row {
+.meal-planner-row {
   margin-bottom: 10px;
   background-color: rgba(255, 255, 255, 0.933);
 }
 
 
-.container {
+.meal-planner-container {
   position: relative;
   top: -20px;
 }
 
-.box-container {
+.meal-planner-box-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@
   margin-bottom: 20px;
 }
 
-.box {
+.meal-planner-box {
   border: 2px solid;
   padding: 13px;
   width: 283px;
@@ -44,21 +44,21 @@
   
 }
 
-.box:first-child {
+.meal-planner-box:first-child {
   margin-right: auto
 }
 
-.box:last-child {
+.meal-planner-box:last-child {
   margin-left: 100px;
   margin-right: 565px;
 }
 
 
-.title {
+.meal-planner-title {
   margin-bottom: 50px;
 }
 
-.sections-container {
+.meal-planner-sections-container {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -66,11 +66,11 @@
   margin-bottom: 20px;
 }
 
-.sections-container > * {
+.meal-planner-sections-container > * {
   margin:0 150px; 
 }
 
-.remove {
+.meal-planner-remove {
   align-items: center;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.829) 0 3px 1px -2px, rgba(0, 0, 0, 0.267) 0 2px 2px 0, rgba(0, 0, 0, 0.596) 0 1px 5px 0;
@@ -92,9 +92,9 @@
   vertical-align: middle;
 }
 
-.confirm{
+.meal-planner-confirm{
   position: absolute;
-  right: 60px;
+  right: 150px;
   top: 90px;
   background-color: rgb(255, 255, 255);
   font-size: 16px;
