@@ -35,5 +35,4 @@ jobs:
       
       - name: Test App code
         run: | 
-          cd backend
           pytest
