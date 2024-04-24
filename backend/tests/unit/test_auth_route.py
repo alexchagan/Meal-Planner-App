@@ -30,6 +30,7 @@ class TestAuthRoutes(TestCase):
             "sub": "user123",
             "name": "John Doe",
             "email": "john@example.com",
+            "picture": "picture"
         }
 
         # Prepare test data

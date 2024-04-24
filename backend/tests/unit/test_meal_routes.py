@@ -29,9 +29,9 @@ class TestMealsRoutes(TestCase):
         today = date.today().strftime("%Y-%m-%d")
         data = {
             "date": today,
-            "morning": [["Oatmeal", "common", "100", "0", "0", "0", "0"]],
-            "afternoon": [["Chicken Breast", "common", "150", "0", "0", "0", "0"]],
-            "evening": [["Salmon", "common", "200", "0", "0", "0", "0"]],
+            "morning": [["Oatmeal"]],
+            "afternoon": [["Chicken Breast"]],
+            "evening": [["Salmon"]],
         }
 
         # Send POST request to the endpoint
@@ -51,7 +51,6 @@ class TestMealsRoutes(TestCase):
         meal1 = MealSQL(
             user_id=1,
             date=today,
-            type="common",
             period="morning",
             meal="Oatmeal",
             serving=100,
@@ -63,7 +62,6 @@ class TestMealsRoutes(TestCase):
         meal2 = MealSQL(
             user_id=1,
             date=today,
-            type="common",
             period="afternoon",
             meal="Chicken Breast",
             serving=150,
@@ -75,7 +73,6 @@ class TestMealsRoutes(TestCase):
         meal3 = MealSQL(
             user_id=1,
             date=today,
-            type="common",
             period="evening",
             meal="Salmon",
             serving=200,
@@ -112,7 +109,6 @@ class TestMealsRoutes(TestCase):
         meal = MealSQL(
             user_id=1,
             date=today,
-            type="common",
             period="morning",
             meal="Oatmeal",
             serving=100,

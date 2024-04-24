@@ -15,7 +15,7 @@ from app.models.MealSQL import MealSQL
 
 class TestMealRoutes(TestCase):
     def create_app(self):
-        app = create_app()
+        app = create_app(testing=True)
         app.config["TESTING"] = True
         return app
 
@@ -38,9 +38,9 @@ class TestMealRoutes(TestCase):
         # Prepare meal data
         meal_data = {
             "date": current_date,
-            "morning": [["Oatmeal", "common", "0", "0", "0", "0", "0"]],
-            "afternoon": [["Chicken Breast", "custom", "150", "0", "0", "0", "0"]],
-            "evening": [["Salmon", "common", "0", "0", "0", "0", "0"]],
+            "morning": [["Oatmeal"]],
+            "afternoon": [["Chicken Breast"]],
+            "evening": [["Salmon"]],
         }
 
         # Set the user's session
@@ -63,7 +63,7 @@ class TestMealRoutes(TestCase):
             user_id="user123", date=current_date, period="morning", meal="Oatmeal"
         ).first()
         self.assertIsNotNone(morning_meal)
-        self.assertEqual(morning_meal.serving, 100)
+        self.assertEqual(morning_meal.serving, 100.0)
 
         afternoon_meal = MealSQL.query.filter_by(
             user_id="user123",
@@ -72,10 +72,10 @@ class TestMealRoutes(TestCase):
             meal="Chicken Breast",
         ).first()
         self.assertIsNotNone(afternoon_meal)
-        self.assertEqual(afternoon_meal.serving, 150)
+        self.assertEqual(afternoon_meal.serving, 100.0)
 
         evening_meal = MealSQL.query.filter_by(
             user_id="user123", date=current_date, period="evening", meal="Salmon"
         ).first()
         self.assertIsNotNone(evening_meal)
-        self.assertEqual(evening_meal.serving, 100)
+        self.assertEqual(evening_meal.serving, 100.0)

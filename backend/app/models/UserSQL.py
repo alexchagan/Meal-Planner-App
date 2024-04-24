@@ -15,4 +15,4 @@ class UserSQL(db.Model):
     daily_prot = db.Column("daily_prot", db.Float)
     daily_carb = db.Column("daily_carb", db.Float)
     daily_fats = db.Column("daily_fats", db.Float)
-    picture = db.Column("picture", db.String(50))
+    picture = db.Column("picture", db.String(255))
