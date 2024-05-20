@@ -33,7 +33,6 @@ function WeeklyMeals() {
   }, []); 
 
   const removeMeal = (date: string, period: string, meal: string) => {
-    
     fetch('http://127.0.0.1:5000/remove_meal', {
       credentials: 'include',
       method: 'POST',
@@ -43,22 +42,18 @@ function WeeklyMeals() {
       body: JSON.stringify({ date, period, meal })
     })
       .then(response => {
-        
         if (response.ok) {
-          
-          setWeeklyMeals(prevMeals => {
-            if (prevMeals) {
-              const updatedMeals = { ...prevMeals };
-              updatedMeals[date][period] = updatedMeals[date][period].filter(
-                m => m.meal !== meal
-              );
-              return updatedMeals;
-            }
-            return prevMeals;
+          return fetch('http://127.0.0.1:5000/send_weekly_meals', {
+            credentials: 'include',
+            method: 'GET',
           });
         } else {
           throw new Error('Failed to remove meal');
         }
+      })
+      .then(response => response.json())
+      .then(data => {
+        setWeeklyMeals(data);
       })
       .catch(error => {
         console.error('Error removing meal:', error);
@@ -166,7 +161,7 @@ function WeeklyMeals() {
           })}
         </div>
       ) : (
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div style={{ textAlign: 'center' }}>
         <p style={{ fontSize: '24px', fontWeight: 'bold' }}>
           No meals are scheduled yet, go to the{' '}
           <a href="/mealplanner" style={{ color: 'blue', textDecoration: 'underline' }}>
