@@ -81,8 +81,8 @@ function WeeklyMeals() {
 
   return (
     <div>
-      {weeklyMeals ? (
-        
+      {weeklyMeals && Object.keys(weeklyMeals).length > 0 ? (
+
         <div>
           <div className='weekly-meals-buttons'> 
             <button className="button-61 weekly-meals-left" onClick={handlePrevDate}><ArrowBackIcon/></button>
@@ -166,7 +166,14 @@ function WeeklyMeals() {
           })}
         </div>
       ) : (
-        <p>Loading...</p>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <p style={{ fontSize: '24px', fontWeight: 'bold' }}>
+          No meals are scheduled yet, go to the{' '}
+          <a href="/mealplanner" style={{ color: 'blue', textDecoration: 'underline' }}>
+            Meal Scheduler page
+          </a>.
+        </p>
+      </div>
       )}
     </div>
   );
