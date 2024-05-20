@@ -5,11 +5,9 @@ class MealSQL(db.Model):
     """
     Model class representing the Meals table in the database.
     """
-
     __tablename__ = "Meals"
-
     meal_id = db.Column("id", db.Integer, primary_key=True)
-    user_id = db.Column("user_id", db.String(30))
+    user_id = db.Column("user_id", db.String(30), db.ForeignKey("Users.id"))
     date = db.Column("date", db.String(10))
     period = db.Column("period", db.String(10))
     meal = db.Column("meal", db.String(50))
@@ -18,3 +16,5 @@ class MealSQL(db.Model):
     protein = db.Column("protein", db.Float)
     carb = db.Column("carb", db.Float)
     fat = db.Column("fat", db.Float)
+
+    user = db.relationship("UserSQL", backref=db.backref("meals", lazy=True))

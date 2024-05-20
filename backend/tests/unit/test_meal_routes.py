@@ -1,6 +1,5 @@
 from datetime import date
-from flask_testing import TestCase
-
+import pytest
 import sys
 import os
 
@@ -9,131 +8,134 @@ sys.path.append(backend_dir)
 
 from app import create_app, db
 from app.models.MealSQL import MealSQL
+from app.models.UserSQL import UserSQL
 
+@pytest.fixture
+def client():
+    app = create_app(testing=True)
+    app.config["TESTING"] = True
 
-class TestMealsRoutes(TestCase):
-    def create_app(self):
-        app = create_app(testing=True)
-        app.config["TESTING"] = True
-        return app
+    with app.test_client() as client:
+        with app.app_context():
+            db.create_all()
+        yield client
 
-    def setUp(self):
-        db.create_all()
-
-    def tearDown(self):
+    with app.app_context():
         db.session.remove()
         db.drop_all()
 
-    def test_receive_data(self):
-        # Prepare test data
-        today = date.today().strftime("%Y-%m-%d")
-        data = {
-            "date": today,
-            "morning": [["Oatmeal"]],
-            "afternoon": [["Chicken Breast"]],
-            "evening": [["Salmon"]],
-        }
-
-        # Send POST request to the endpoint
-        response = self.client.post("/receive_data", json=data)
-
-        # Assert the response
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"message": "Data received successfully"})
-
-        # Assert that the data is stored in the database
-        meals = MealSQL.query.all()
-        self.assertEqual(len(meals), 3)
-
-    def test_send_weekly_meals(self):
-        # Prepare test data
-        today = date.today().strftime("%Y-%m-%d")
-        meal1 = MealSQL(
-            user_id=1,
-            date=today,
-            period="morning",
-            meal="Oatmeal",
-            serving=100,
-            cal=300,
-            protein=10,
-            carb=50,
-            fat=5,
+@pytest.fixture
+def user(client):
+    with client.application.app_context():
+        user = UserSQL(
+            id=1,
+            name='bob',
+            email='bob@test.com'
         )
-        meal2 = MealSQL(
-            user_id=1,
-            date=today,
-            period="afternoon",
-            meal="Chicken Breast",
-            serving=150,
-            cal=400,
-            protein=30,
-            carb=10,
-            fat=10,
-        )
-        meal3 = MealSQL(
-            user_id=1,
-            date=today,
-            period="evening",
-            meal="Salmon",
-            serving=200,
-            cal=500,
-            protein=40,
-            carb=5,
-            fat=20,
-        )
-        db.session.add_all([meal1, meal2, meal3])
+        db.session.add(user)
+        db.session.commit()
+        yield user
+        db.session.delete(user)
         db.session.commit()
 
-        # Set session user_id
-        with self.client.session_transaction() as session:
-            session["user_id"] = 1
+def test_receive_data(client):
+  
+    today = date.today().strftime("%Y-%m-%d")
+    data = {
+        "date": today,
+        "morning": [["Oatmeal"]],
+        "afternoon": [["Chicken Breast"]],
+        "evening": [["Salmon"]],
+    }
 
-        # Send GET request to the endpoint
-        response = self.client.get("/send_weekly_meals")
+    response = client.post("/receive_data", json=data)
 
-        # Assert the response
-        self.assertEqual(response.status_code, 200)
-        data = response.json
-        self.assertIn(today, data)
-        self.assertEqual(len(data[today]["morning"]), 1)
-        self.assertEqual(len(data[today]["afternoon"]), 1)
-        self.assertEqual(len(data[today]["evening"]), 1)
-        self.assertEqual(data[today]["total"]["calories"], 1200)
-        self.assertEqual(data[today]["total"]["protein"], 80)
-        self.assertEqual(data[today]["total"]["fat"], 35)
-        self.assertEqual(data[today]["total"]["carbs"], 65)
+    assert response.status_code == 200
+    assert response.json == {"message": "Data received successfully"}
 
-    def test_remove_meal(self):
-        # Prepare test data
-        today = date.today().strftime("%Y-%m-%d")
-        meal = MealSQL(
-            user_id=1,
-            date=today,
-            period="morning",
-            meal="Oatmeal",
-            serving=100,
-            cal=300,
-            protein=10,
-            carb=50,
-            fat=5,
-        )
-        db.session.add(meal)
-        db.session.commit()
+    meals = MealSQL.query.all()
+    assert len(meals) == 3
 
-        # Set session user_id
-        with self.client.session_transaction() as session:
-            session["user_id"] = 1
+def test_send_weekly_meals(client, user):
+    today = date.today().strftime("%Y-%m-%d")
+    meal1 = MealSQL(
+        user_id=user.id,
+        date=today,
+        period="morning",
+        meal="Oatmeal",
+        serving=100,
+        cal=300,
+        protein=10,
+        carb=50,
+        fat=5,
+    )
+    meal2 = MealSQL(
+        user_id=user.id,
+        date=today,
+        period="afternoon",
+        meal="Chicken Breast",
+        serving=150,
+        cal=400,
+        protein=30,
+        carb=10,
+        fat=10,
+    )
+    meal3 = MealSQL(
+        user_id=user.id,
+        date=today,
+        period="evening",
+        meal="Salmon",
+        serving=200,
+        cal=500,
+        protein=40,
+        carb=5,
+        fat=20,
+    )
+    db.session.add_all([meal1, meal2, meal3])
+    db.session.commit()
 
-        # Send POST request to the endpoint
-        data = {"date": today, "period": "morning", "meal": "Oatmeal"}
-        response = self.client.post("/remove_meal", json=data)
+    with client.session_transaction() as session:
+        session["user_id"] = user.id
 
-        # Assert the response
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"message": "Meal removed successfully"})
+    response = client.get("/send_weekly_meals")
 
-        # Assert that the meal is removed from the database
-        meal = MealSQL.query.filter_by(
-            user_id=1, date=today, period="morning", meal="Oatmeal"
-        ).first()
-        self.assertIsNone(meal)
+    assert response.status_code == 200
+    data = response.json
+    assert today in data
+    assert len(data[today]["morning"]) == 1
+    assert len(data[today]["afternoon"]) == 1
+    assert len(data[today]["evening"]) == 1
+    assert data[today]["total"]["calories"] == 1200
+    assert data[today]["total"]["protein"] == 80
+    assert data[today]["total"]["fat"] == 35
+    assert data[today]["total"]["carbs"] == 65
+
+def test_remove_meal(client, user):
+    today = date.today().strftime("%Y-%m-%d")
+    meal = MealSQL(
+        user_id=user.id,
+        date=today,
+        period="morning",
+        meal="Oatmeal",
+        serving=100,
+        cal=300,
+        protein=10,
+        carb=50,
+        fat=5,
+    )
+    db.session.add(meal)
+    db.session.commit()
+
+    with client.session_transaction() as session:
+        session["user_id"] = user.id
+
+    data = {"date": today, "period": "morning", "meal": "Oatmeal"}
+    response = client.post("/remove_meal", json=data)
+
+    assert response.status_code == 200
+    assert response.json == {"message": "Meal removed successfully"}
+
+    meal = MealSQL.query.filter_by(
+        user_id=user.id, date=today, period="morning", meal="Oatmeal"
+    ).first()
+    assert meal is None

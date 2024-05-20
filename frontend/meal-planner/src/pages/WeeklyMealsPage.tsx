@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import '../css/WeeklyMeals.css';
 import '../css/Buttons.css';  
@@ -14,7 +14,7 @@ function WeeklyMeals() {
   const [selectedDateIndex, setSelectedDateIndex] = useState(0);
 
   useEffect(() => {
-    // Fetch data from your Flask backend
+    
     fetch('http://127.0.0.1:5000/send_weekly_meals', {
       credentials: 'include',
       method: 'POST',
@@ -24,16 +24,16 @@ function WeeklyMeals() {
     })
       .then(response => response.json())
       .then((data: MealsByDate) => {
-        // Update state with fetched data
+       
         setWeeklyMeals(data);
       })
       .catch(error => {
         console.error('Error fetching weekly meals:', error);
       });
-  }, []); // Run effect only once on component mount
+  }, []); 
 
   const removeMeal = (date: string, period: string, meal: string) => {
-    // Send data to backend to remove the meal
+    
     fetch('http://127.0.0.1:5000/remove_meal', {
       credentials: 'include',
       method: 'POST',
@@ -43,9 +43,9 @@ function WeeklyMeals() {
       body: JSON.stringify({ date, period, meal })
     })
       .then(response => {
-        // Handle response from backend
+        
         if (response.ok) {
-          // If successful, update the weeklyMeals state
+          
           setWeeklyMeals(prevMeals => {
             if (prevMeals) {
               const updatedMeals = { ...prevMeals };
@@ -82,19 +82,23 @@ function WeeklyMeals() {
   return (
     <div>
       {weeklyMeals ? (
+        
         <div>
           <div className='weekly-meals-buttons'> 
             <button className="button-61 weekly-meals-left" onClick={handlePrevDate}><ArrowBackIcon/></button>
             <button className='button-61 weekly-meals-right' onClick={handleNextDate}><ArrowForwardIcon/></button>
           </div>
           {Object.entries(weeklyMeals).map(([date, mealsByPeriod], index) => {
-            if (index !== selectedDateIndex) return null;
+            if (index !== selectedDateIndex) {
+              return null;
+            }
             return (
               <div key={date} className='weekly-meals-wrapper'>
                 <h2 className='weekly-meals-date-header'>{date}</h2>
                 {['morning', 'afternoon', 'evening'].map(period => {
                   const meals = mealsByPeriod[period];
-                  if (!meals || meals.length === 0) return null; // Don't show the period if there are no meals
+                  if (!meals || meals.length === 0){ 
+                    return null; }
                   const capitalizedPeriod = period.charAt(0).toUpperCase() + period.slice(1);
                   return (
                     <div key={period}>

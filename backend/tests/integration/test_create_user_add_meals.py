@@ -1,81 +1,74 @@
-import unittest
-from flask_testing import TestCase
+import pytest
 from datetime import date
-
 import sys
 import os
 
 backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(backend_dir)
-from app import create_app, db
 
+from app import create_app, db
 from app.models.UserSQL import UserSQL
 from app.models.MealSQL import MealSQL
 
+@pytest.fixture
+def client():
+    app = create_app(testing=True)
+    app.config["TESTING"] = True
 
-class TestMealRoutes(TestCase):
-    def create_app(self):
-        app = create_app(testing=True)
-        app.config["TESTING"] = True
-        return app
+    with app.test_client() as client:
+        with app.app_context():
+            db.create_all()
+        yield client
 
-    def setUp(self):
-        db.create_all()
-
-    def tearDown(self):
+    with app.app_context():
         db.session.remove()
         db.drop_all()
 
-    def test_create_meal_for_user(self):
-        # Create a user
+def test_create_meal_for_user(client):  # sourcery skip: extract-duplicate-method
+   
+    with client.application.app_context():
         user = UserSQL(id="user123", name="John Doe", email="john@example.com")
         db.session.add(user)
         db.session.commit()
 
-        # Get the current date
-        current_date = date.today().strftime("%Y-%m-%d")
+  
+    current_date = date.today().strftime("%Y-%m-%d")
 
-        # Prepare meal data
-        meal_data = {
-            "date": current_date,
-            "morning": [["Oatmeal"]],
-            "afternoon": [["Chicken Breast"]],
-            "evening": [["Salmon"]],
-        }
+   
+    meal_data = {
+        "date": current_date,
+        "morning": [["Oatmeal"]],
+        "afternoon": [["Chicken Breast"]],
+        "evening": [["Salmon"]],
+    }
 
-        # Set the user's session
-        with self.client.session_transaction() as session:
-            session["user_id"] = "user123"
+   
+    with client.session_transaction() as session:
+        session["user_id"] = "user123"
 
-        # Send POST request to add meals for the user
-        response = self.client.post("/receive_data", json=meal_data)
+    response = client.post("/receive_data", json=meal_data)
 
-        # Assert the response
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"message": "Data received successfully"})
+    assert response.status_code == 200
+    assert response.json == {"message": "Data received successfully"}
 
-        # Assert that the meals are stored in the database with the user's ID
+    with client.application.app_context():
         meals = MealSQL.query.filter_by(user_id="user123", date=current_date).all()
-        self.assertEqual(len(meals), 3)
+        assert len(meals) == 3
 
-        # Assert the specific meal details
         morning_meal = MealSQL.query.filter_by(
             user_id="user123", date=current_date, period="morning", meal="Oatmeal"
         ).first()
-        self.assertIsNotNone(morning_meal)
-        self.assertEqual(morning_meal.serving, 100.0)
+        assert morning_meal is not None
+        assert morning_meal.serving == 100.0
 
         afternoon_meal = MealSQL.query.filter_by(
-            user_id="user123",
-            date=current_date,
-            period="afternoon",
-            meal="Chicken Breast",
+            user_id="user123", date=current_date, period="afternoon", meal="Chicken Breast"
         ).first()
-        self.assertIsNotNone(afternoon_meal)
-        self.assertEqual(afternoon_meal.serving, 100.0)
+        assert afternoon_meal is not None
+        assert afternoon_meal.serving == 100.0
 
         evening_meal = MealSQL.query.filter_by(
             user_id="user123", date=current_date, period="evening", meal="Salmon"
         ).first()
-        self.assertIsNotNone(evening_meal)
-        self.assertEqual(evening_meal.serving, 100.0)
+        assert evening_meal is not None
+        assert evening_meal.serving == 100.0

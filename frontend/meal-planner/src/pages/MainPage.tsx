@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignIn from '../components/SignIn';
 import '../css/MainPage.css';
