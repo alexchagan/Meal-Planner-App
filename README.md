@@ -31,21 +31,34 @@ The application provides a convenient way to plan and visualize meals for each d
 <!-- GETTING STARTED -->
 ## Getting Started
 
-### Installation
+## Installation
 
+Clone the repo
+```
+git clone https://github.com/alexchagan/Meal-Planner-App.git
+```
 
-1. Clone the repo
+### With docker-compose
+
+1.
+    ```
+   docker-compose build --no-cache
    ```
-   git clone https://github.com/alexchagan/Meal-Planner-App.git
+2.
+    ```
+   docker-compose up
    ```
-2. Install frontend dependencies:
+
+### Without docker-compose
+
+1. Install frontend dependencies:
    ```
    cd frontend/meal-planner
    npm install
    npm run dev
    ```
 
-3. Install backend dependencies:
+2. Install backend dependencies:
    ```
    cd backend
    pip install -r requirements.txt
@@ -67,7 +80,11 @@ The application provides a convenient way to plan and visualize meals for each d
 * View Weekly Meals: To view your weekly meal schedule, navigate to the weekly meal overview section. You'll see a table format displaying your planned meals for each day of the week. And Total values for each day. 
  <div align="center">
   <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/2d2d37a6-74c4-4f6b-a4a3-d512b6dc266f>
+ </div>
 
+ * User profile with a calorie calculator and setting daily nutrition goals
+<div align="center">
+  <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/afb21a05-ea1a-4a61-9820-d66060ce2674>
  </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
