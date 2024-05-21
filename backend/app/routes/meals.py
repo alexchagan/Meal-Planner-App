@@ -45,11 +45,9 @@ def send_weekly_meals():
     Returns:
         Response: JSON response containing weekly meals data.
     """
-    # Retrieve current days of the week
+   
     current_days = utils.get_dates_of_week()
-    user_id = session.get("user_id")
-
-    # Retrieve meals for the current user and days
+    user_id = session.get("user_id")  
     meals_query = MealSQL.query.filter(
         MealSQL.user_id == user_id, MealSQL.date.in_(current_days)
     ).all()
@@ -108,7 +106,6 @@ def send_weekly_meals():
             "carbs": total_carbs,
         }
 
-    # Send the JSON response to the frontend
     print(weekly_meals)
     return jsonify(weekly_meals)
 
@@ -121,12 +118,10 @@ def send_daily_meals():
     Returns:
         Response: JSON response containing weekly meals data.
     """
-    # Retrieve current days of the week
     data = request.json
     current_date = utils.convert_date_simple(data["date"])
     user_id = session.get("user_id")
 
-    # Retrieve meals for the current user and days
     meals_query = MealSQL.query.filter(
         MealSQL.user_id == user_id, MealSQL.date == current_date
     ).all()
@@ -138,8 +133,6 @@ def send_daily_meals():
         period = meal.period.lower()
         daily_meals[meal.date][period].append({"meal": meal.meal})
 
-    # Send the JSON response to the frontend
-    print(daily_meals)
     return jsonify(daily_meals)
 
 
@@ -167,5 +160,4 @@ def receive_weekly_meals():
         else:
             return jsonify({"message": "Meal not found"}), 404
     except Exception as e:
-        # Handle any errors that might occur during the deletion process
         return jsonify({"message": "Error removing meal", "error": str(e)}), 500

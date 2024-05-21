@@ -44,17 +44,13 @@ def get_dates_of_week():
     Returns:
         list: List of date strings in YYYY-MM-DD format representing the current week.
     """
-    # Get today's date in Israel time zone
-    tz = pytz.timezone("Israel")
-    today = datetime.now(tz)
+    today = get_todays_date()
 
     # Calculate the start of the current week (Monday)
     start_of_week = today - timedelta(days=(today.weekday() + 1) % 7)
 
-    # List to store the days of the week
     days = []
 
-    # Calculate and append the dates of the week to the list
     for i in range(7):
         day = start_of_week + timedelta(days=i)
         days.append(day.strftime("%Y-%m-%d"))
@@ -69,6 +65,5 @@ def get_todays_date():
     Returns:
         list: List of date strings in YYYY-MM-DD format representing the current week.
     """
-    # Get today's date in Israel time zone
     tz = pytz.timezone("Israel")
     return datetime.now(tz)

@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 import requests
 from ..models.MealSQL import MealSQL
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
 @dataclass
 class Meal:
     _date: str
@@ -61,10 +63,10 @@ class Meal:
         """
         Retrieve nutritional values from an external API.
         """
-        url = "https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition"
+        url = os.getenv('NUTRITION_API_URL')
         headers = {
-            "X-RapidAPI-Key": "096448c304mshd918b5bbf4f9eddp13a329jsn97df6f0ab30b",
-            "X-RapidAPI-Host": "nutrition-by-api-ninjas.p.rapidapi.com",
+            "X-RapidAPI-Key": os.getenv('X_RAPID_API_KEY'),
+            "X-RapidAPI-Host": os.getenv('X_RAPID_API_HOST'),
         }
         try:
             response = requests.get(url, params={"query": self._meal}, headers=headers)

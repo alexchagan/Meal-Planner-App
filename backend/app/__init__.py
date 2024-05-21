@@ -14,10 +14,10 @@ def create_app(testing=False):
     app.config["SESSION_COOKIE_SAMESITE"] = "None"
     app.config["SESSION_COOKIE_SECURE"] = True
     if not testing:
-        app.config["SQLALCHEMY_DATABASE_URI"] = (
-            "mysql://root:root@127.0.0.1:3306/meal_planner"
-        )
-        # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@db:3306/meal_planner'
+        # app.config["SQLALCHEMY_DATABASE_URI"] = (
+        #     "mysql://root:root@127.0.0.1:3306/meal_planner"
+        # )
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@db:3306/meal_planner'
     else:
         app.config["SQLALCHEMY_DATABASE_URI"] = (
             "mysql://root:root@127.0.0.1:3306/meal_planner_test"
