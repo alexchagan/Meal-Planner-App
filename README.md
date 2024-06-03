@@ -9,7 +9,7 @@
 </div>
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About The Project 🍇
 Welcome to the Meal Planner App! <br />
 This application allows users to create and manage their daily meal schedules for the current week. <br />
 The application can send simple meal descriptions to a third-party API and get full nutrition values. <br />
@@ -21,31 +21,42 @@ The application provides a convenient way to plan and visualize meals for each d
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Key Features
+### Key Features 
 * Google Account Integration: Users can easily log in to the app using their Google account credentials.
 * Meal Planning: Users can create a daily meal schedule for the current week, specifying meals for morning, afternoon, and evening periods.
 * Weekly Meal Overview: The app provides a table format to view the weekly meal schedule, making it easy for users to see their planned meals for each day.
 * Database: Stores all user data and meal data for each week of each user.
 * Third party API: A Nutrition API that converts simple meal description into full nutritional values.
 
-<!-- GETTING STARTED -->
-## Getting Started
+<!-- Installation -->
+## Installation 🍎
 
-### Installation
+Clone the repo
+```
+git clone https://github.com/alexchagan/Meal-Planner-App.git
+```
 
+### With docker-compose
 
-1. Clone the repo
+1.
+    ```
+   docker-compose build --no-cache
    ```
-   git clone https://github.com/alexchagan/Meal-Planner-App.git
+2.
+    ```
+   docker-compose up
    ```
-2. Install frontend dependencies:
+
+### Without docker-compose
+
+1. Install frontend dependencies:
    ```
    cd frontend/meal-planner
    npm install
    npm run dev
    ```
 
-3. Install backend dependencies:
+2. Install backend dependencies:
    ```
    cd backend
    pip install -r requirements.txt
@@ -56,7 +67,7 @@ The application provides a convenient way to plan and visualize meals for each d
 
 
 <!-- USAGE EXAMPLES -->
-## Features
+## Web Application Features 🍋
 
 * Log In: Click on the "Log In with Google" button to log in to the app using your Google account.
 * Create Meal Schedule: Once logged in, navigate to the meal planner section to create your daily meal schedule. Choose the day of the week and specify meals for morning, afternoon, and evening periods. Choose between Common and Custom options for meal description.
@@ -67,12 +78,16 @@ The application provides a convenient way to plan and visualize meals for each d
 * View Weekly Meals: To view your weekly meal schedule, navigate to the weekly meal overview section. You'll see a table format displaying your planned meals for each day of the week. And Total values for each day. 
  <div align="center">
   <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/2d2d37a6-74c4-4f6b-a4a3-d512b6dc266f>
+ </div>
 
+ * User profile with a calorie calculator and setting daily nutrition goals
+<div align="center">
+  <img src=https://github.com/alexchagan/Meal-Planner-App/assets/44925899/afb21a05-ea1a-4a61-9820-d66060ce2674>
  </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Nutrition API
+## Nutrition API 🍒
 The Nutrition API extracts nutrition information from text using natural language processing.<br />
 From food blogs to menus to recipes, it can read any text and calculate the corresponding nutrition data.<br />
 An intelligent feature of this API is custom portioning: if your text specifies quantities of individual food items or ingredients, the algorithm will automatically scale the nutrition data in the result accordingly.
@@ -80,7 +95,7 @@ https://api-ninjas.com/api/nutrition
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## Technologies Used 
+## Technologies Used 🍌
 * React.js: Frontend framework for building the user interface.
 * Firebase Authentication: Used for user authentication with Google accounts.
 * CSS: Styling the components and layout of the application.
@@ -92,7 +107,7 @@ https://api-ninjas.com/api/nutrition
 
 
 <!-- CONTACT -->
-## Contact
+## Contact 🍉
 
 Alex Chagan  -- alexchagan95@gmail.com
 
