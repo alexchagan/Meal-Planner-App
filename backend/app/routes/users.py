@@ -8,6 +8,12 @@ users = Blueprint("users", __name__)
 
 @users.route("/get_daily_goals", methods=["POST"])
 def get_daily_goals():
+    """
+    Endpoint to receive daily nutrition goals from the frontend and store it in the database.
+
+    Returns:
+        Response: JSON response indicating the success of the operation.
+    """
     try:
         data = request.json
         user_id = session.get("user_id")
@@ -38,6 +44,12 @@ def get_daily_goals():
 
 @users.route("/send_user_info", methods=["GET"])
 def send_user_info():
+    """
+    Endpoint to send daily nutrition goals to the frontend.
+
+    Returns:
+        Response: JSON with user object.
+    """
     try:
         user_id = session.get("user_id")
         if user_query := UserSQL.query.filter(UserSQL.id == user_id).first():

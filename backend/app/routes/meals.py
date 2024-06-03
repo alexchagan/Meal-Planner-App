@@ -3,10 +3,9 @@ import app.utils as utils
 from ..models.MealSQL import MealSQL
 from .. import db
 from collections import defaultdict
+from flask import jsonify, request
 
 meals = Blueprint("meals", __name__)
-
-from flask import jsonify, request
 
 
 @meals.route("/receive_data", methods=["POST"])

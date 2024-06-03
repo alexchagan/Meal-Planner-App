@@ -24,7 +24,7 @@ class Meal:
     def meal(self):
         return self._meal
 
-    def convert_to_sql_object(self, id):
+    def convert_to_sql_object(self, id : str):
 
         return MealSQL(
             user_id=id,
@@ -70,7 +70,7 @@ class Meal:
         }
         try:
             response = requests.get(url, params={"query": self._meal}, headers=headers)
-            response.raise_for_status()  # Raise an exception for 4xx/5xx status codes
+            response.raise_for_status() 
             data = response.json()
             for food_item in data:
                 self._serving += food_item["serving_size_g"]
