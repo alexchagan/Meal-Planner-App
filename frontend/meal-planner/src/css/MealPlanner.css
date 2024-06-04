@@ -28,7 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20vh; /* Adjust the height as needed */
+  height: 20vh; 
   margin-bottom: 20px;
 }
 
@@ -36,8 +36,8 @@
   border: 2px solid;
   padding: 13px;
   width: 283px;
-  height: 100px; /* Adjust the height as needed */
-  margin: 0 0px; /* Add some horizontal margin between boxes */
+  height: 100px; 
+  margin: 0 50px; 
   border-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
   border-image-slice: 1;
   background-color: rgba(255, 255, 255, 0.5);
@@ -50,7 +50,7 @@
 
 .meal-planner-box:last-child {
   margin-left: 100px;
-  margin-right: 565px;
+  margin-right: 785px;
 }
 
 
@@ -95,7 +95,7 @@
 .meal-planner-confirm{
   position: absolute;
   right: 150px;
-  top: 90px;
+  top: 110px;
   background-color: rgb(255, 255, 255);
   font-size: 16px;
 }

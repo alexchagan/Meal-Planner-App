@@ -28,15 +28,9 @@ def get_daily_goals():
             user.daily_fats = fats
             db.session.commit()
 
-            return (
-                jsonify(
-                    {
-                        "message": "Daily goals were updated",
-                        "user_id": session.get("user_id"),
-                    }
-                ),
-                200,
-            )
+            return (jsonify({"message": "Daily goals were updated",
+                             "user_id": session.get("user_id"),}
+                           ),200,)
 
     except ValueError:
         pass

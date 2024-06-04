@@ -58,7 +58,7 @@ def send_weekly_meals():
         period = meal.period.lower()
         weekly_meals[meal.date][period].append(
             {
-                "meal": meal.meal,
+                "meal": utils.add_emojis_to_meal(meal.meal),
                 "grams": meal.serving,
                 "calories": meal.cal,
                 "protein": meal.protein,
@@ -112,7 +112,7 @@ def send_weekly_meals():
 @meals.route("/send_daily_meals", methods=["GET", "POST"])
 def send_daily_meals():
     """
-    Endpoint to retrieve and send weekly meals data to the frontend.
+    Endpoint to retrieve and send daily meals data to the frontend.
 
     Returns:
         Response: JSON response containing weekly meals data.
@@ -130,7 +130,7 @@ def send_daily_meals():
 
     for meal in meals_query:
         period = meal.period.lower()
-        daily_meals[meal.date][period].append({"meal": meal.meal})
+        daily_meals[meal.date][period].append({"meal": utils.add_emojis_to_meal(meal.meal)})
 
     return jsonify(daily_meals)
 

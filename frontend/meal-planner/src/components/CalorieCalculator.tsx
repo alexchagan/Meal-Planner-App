@@ -3,11 +3,18 @@ import { TextField, MenuItem } from '@mui/material';
 
 export const CalorieCalculator: React.FC = () => {
   const [gender, setGender] = useState<string>('');
-  const [age, setAge] = useState<number>(0);
-  const [weight, setWeight] = useState<number>(0);
+  const [age, setAge] = useState<number | ''>('');
+  const [weight, setWeight] = useState<number | ''>('');
   const [activityLevel, setActivityLevel] = useState<string>('');
 
   const calculateCalories = () => {
+    if (age === '' || weight === '') {
+      return {
+        maintenanceCalories: 0,
+        losingWeightCalories: 0,
+      };
+    }
+
     let bmr = 0;
     if (gender === 'male') {
       bmr = 88.362 + (13.397 * weight) + (4.799 * age) - (5.677 * age);
@@ -69,8 +76,8 @@ export const CalorieCalculator: React.FC = () => {
         <TextField
           label="Age"
           type="number"
-          value={age}
-          onChange={(e) => setAge(Number(e.target.value))}
+          value={age ?? ''}
+          onChange={(e) => setAge(e.target.value === '' ? '' : Number(e.target.value))}
           variant="outlined"
           fullWidth
           sx={{ marginBottom: '16px' }}
@@ -81,8 +88,8 @@ export const CalorieCalculator: React.FC = () => {
         <TextField
           label="Weight (kg)"
           type="number"
-          value={weight}
-          onChange={(e) => setWeight(Number(e.target.value))}
+          value={weight ?? ''}
+          onChange={(e) => setWeight(e.target.value === '' ? '' : Number(e.target.value))}
           variant="outlined"
           fullWidth
           sx={{ marginBottom: '16px' }}

@@ -71,7 +71,7 @@ class Meal:
         try:
             response = requests.get(url, params={"query": self._meal}, headers=headers)
             response.raise_for_status() 
-            data = response.json()
+            data = response.json() # Can have multiple food items in 1 json
             for food_item in data:
                 self._serving += food_item["serving_size_g"]
                 self._cal += food_item["calories"]

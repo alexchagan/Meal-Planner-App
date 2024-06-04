@@ -17,6 +17,8 @@ import { formatMealPeriodData } from '../utils/mealPeriodUtils';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const MealPlanner = () => {
@@ -77,12 +79,12 @@ const MealPlanner = () => {
 
       if (response.ok) {
         console.log('Data sent successfully to the backend');
-        openMessageDialog('Added meals successfully');  
+        openMessageDialog('✔️ Added meals successfully');  
       } 
       else {
         console.error('Failed to send data to the backend');
         const responseData = await response.json();
-        openMessageDialog(JSON.stringify(responseData.error));   
+        openMessageDialog('❌' + JSON.stringify(responseData.error));   
       }
     } catch (error) {
       console.error('Error sending data to the backend:', error);
@@ -175,12 +177,19 @@ const MealPlanner = () => {
         })}
       </div>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogContent>{dialogContent}</DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
+          <DialogTitle>Message</DialogTitle>
+          <DialogContent>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+              <Typography variant="body1">{dialogContent}</Typography>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="primary" onClick={() => setOpenDialog(false)}>
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
     </div>
   );
 };

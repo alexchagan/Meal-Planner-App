@@ -2,19 +2,38 @@ from app.models.Meal import Meal
 from datetime import datetime, timedelta
 import pytz
 
-
-def convert_date_simple(date):
-    """
-    Convert date string to a simplified format (YYYY-MM-DD).
-
-    Args:
-        date (str): Date string in ISO format.
-
-    Returns:
-        str: Simplified date string.
-    """
-    return date.split("T")[0]
-
+food_to_emoji = {
+    "chicken": "🍗",
+    "salmon": "🐟",
+    "yogurt": "🥛",
+    "oatmeal": "🥣",
+    "rice": "🍚",
+    "potato": "🍠",
+    "broccoli": "🥦",
+    "spinach": "🥬",
+    "avocado": "🥑",
+    "strawberries": "🍓",
+    "raspberries": "🍒",
+    "banana": "🍌",
+    "orange": "🍊",
+    "apple": "🍎",
+    "mango": "🥭",
+    "pineapple": "🍍",
+    "kiwi": "🥝",
+    "watermelon": "🍉",
+    "almond": "🌰",
+    "peanut butter": "🥜",
+    "egg": "🥚",
+    "beef": "🥩",
+    "turkey": "🦃",
+    "tofu": "🧈",
+    "edamame": "🌱",
+    "cheese": "🧀",
+    "tuna": "🐟",
+    "shake": "🥤",
+    "bread": "🍞",
+    "seed": "🌰"
+}
 
 def json_to_meal_objects(json_item):
     """
@@ -26,7 +45,7 @@ def json_to_meal_objects(json_item):
     Returns:
         list: List of Meal objects.
     """
-    date = convert_date_simple(json_item["date"])
+    date = json_item["date"].split("T")[0]
     meals = []
 
     for period in ["morning", "afternoon", "evening"]:
@@ -67,3 +86,26 @@ def get_todays_date():
     """
     tz = pytz.timezone("Israel")
     return datetime.now(tz)
+
+def add_emojis_to_meal(meal_text):
+    words = meal_text.split()
+    result = []
+
+    for word in words:
+        emoji_added = False
+        for food, emoji in food_to_emoji.items():
+            if food in word.lower():
+                result.append(word + " " + emoji)
+                emoji_added = True
+                break
+        if not emoji_added:
+            result.append(word)
+
+    return " ".join(result)
+
+    
+
+
+
+
+    
